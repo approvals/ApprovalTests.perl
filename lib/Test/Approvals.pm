@@ -1,0 +1,5 @@
+#! perl
+package Test::Approvals;
+{
+	
+}
