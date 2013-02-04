@@ -3,9 +3,24 @@
 use strict;
 use warnings;
 
+package Test::Approvals::Reporter;
+{
+    use Moose;
+
+    has 'was_called', isa=>'Int', is=>'rw', default=>0;
+
+    sub report{
+        my($self, $approved, $received) = @_;
+        $self->was_called(1);        
+    }
+}
+
+
+package main;
 use FindBin::Real qw(Bin );
 use Test::More;
 use Test::Approvals::Namer;
+use Test::Approvals::Core::FileApprover qw(verify_files);
 
 sub test {
     my ( $test_name, $test_method ) = @_;
@@ -14,6 +29,20 @@ sub test {
 
     $test_method->( Test::Approvals::Namer->new( test_name => $test_name ) );
 }
+
+test "Approve file doesn't exist.", sub {
+    my($namer) = @_;
+    my $reporter = Test::Approvals::Reporter->new();
+    verify_files("File_that_does_not_exist", "a.txt", $reporter);
+    ok($reporter->was_called(), $namer->test_name());
+};
+
+test "Test Files Match.", sub {
+    my($namer) = @_;
+    my $reporter = Test::Approvals::Reporter->new();
+    verify_files("t/a1.txt", "t/a.txt", $reporter);
+    ok(!$reporter->was_called(), $namer->test_name());
+};
 
 test(
     "Namer finds directory.",
@@ -35,5 +64,7 @@ test "Namer knows received file", sub {
     like( $namer->get_received_file("txt"),
         qr/simple\.t\.namer_knows_received_file\.received\.txt$/ );
 };
+
+
 
 done_testing();
