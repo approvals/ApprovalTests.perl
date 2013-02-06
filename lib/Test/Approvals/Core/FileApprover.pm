@@ -11,10 +11,11 @@ our @EXPORT = qw(verify_files verify_parts);
 our @ISA    = qw(Exporter);
 
 sub verify_parts {
-    my($writer, $namer, $reporter)=@_;
-    my $received = $writer->write($namer->get_received_file($writer->file_extension()));
-    my $approved = $namer->get_approved_file($writer->file_extension());
-    verify_files($approved, $received, $reporter);
+    my ( $writer, $namer, $reporter ) = @_;
+    my $received =
+      $writer->write( $namer->get_received_file( $writer->file_extension() ) );
+    my $approved = $namer->get_approved_file( $writer->file_extension() );
+    verify_files( $approved, $received, $reporter );
 }
 
 sub verify_files {
