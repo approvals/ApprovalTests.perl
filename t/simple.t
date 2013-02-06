@@ -15,12 +15,24 @@ package Test::Approvals::Reporter;
     }
 }
 
+package Test::Approvals::Reporters::TortoiseDiffReporter;
+{
+    use Moose;
+
+    sub report {
+        my($self, $approved, $received) = @_;
+        my $programs = "C:/Program Files (x86)/";
+        my $bin = "TortoiseSVN/bin/tortoisemerge.exe";
+        system qq{$programs$bin "$approved" "$received"};
+    }
+}
 
 package main;
 use FindBin::Real qw(Bin );
 use Test::More;
 use Test::Approvals::Namer;
 use Test::Approvals::Core::FileApprover qw(verify_files);
+use Readonly;
 
 sub test {
     my ( $test_name, $test_method ) = @_;
@@ -28,6 +40,30 @@ sub test {
     my $working_dir = Bin();
 
     $test_method->( Test::Approvals::Namer->new( test_name => $test_name ) );
+}
+
+
+sub verify {
+    my ( $test_name, $reporter, $test_method ) = @_;
+    my $namer = Test::Approvals::Namer->new( test_name => $test_name );
+    my $result = $test_method->(  $namer );
+    my $writer = Test::Approvals::Writers::TextWriter->new( result => $result, filetype => '.txt');
+    my $test_more_reporter = Test::Approvals::Reporters::TestMoreReporter->new(name => $namer->test_name());
+    my $full_reporter = Tset::Approvals::Reporters::AndReporter->new($test_more_reporter, $reporter);
+    verify_parts($writer, $namer, $reporter);
+}
+
+{
+    Readonly my $REPORTER => Test::Approvals::Reporters::TortoiseDiffReporter->new();
+    verify "Verify Hello World", $REPORTER, 
+    sub {
+        return "Hello World";
+    };
+
+    verify "Verify Hello World", $REPORTER, 
+    sub {
+        return "Hello World";
+    };
 }
 
 test "Approve file doesn't exist.", sub {
