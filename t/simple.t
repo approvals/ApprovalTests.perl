@@ -18,21 +18,19 @@ package Test::Approvals::Reporter;
 package Test::Approvals::Reporters::TortoiseDiffReporter;
 {
     use Moose;
-    use threads;
+    use File::Touch;
 
     sub report {
         my ( $self, $approved, $received ) = @_;
 
-        $approved =~ s{/}{\\}gmisx;
-        $received =~ s{/}{\\}gmisx;
+        $approved =~ s{/}{\\\\}gmisx;
+        $received =~ s{/}{\\\\}gmisx;
 
-        my $programs = "C:/Program Files/";
-        my $bin      = "TortoiseSVN/bin/tortoisemerge.exe ";
-        async {
-            system
-"\"C:\\Program Files\\TortoiseSVN\\bin\\tortoisemerge.exe\" \"C:\\source\\Test-Approvals\\t\\a.txt\" \"C:\\source\\Test-Approvals\\t\\a1.txt\"";
-        }
-        ->detach();
+        my $programs = "C:\\Program Files\\";
+        my $bin      = "TortoiseSVN\\bin\\tortoisemerge.exe";
+        touch($approved);
+        system
+          "start \"Reporter\" \"$programs$bin\" \"$received\" \"$approved\"";
     }
 }
 
