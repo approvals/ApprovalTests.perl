@@ -19,6 +19,8 @@ package Test::Approvals::Reporters::TortoiseDiffReporter;
 {
     use Moose;
     use File::Touch;
+    use Win32::Process;
+    use FindBin::Real qw(Bin);
 
     sub report {
         my ( $self, $approved, $received ) = @_;
@@ -26,11 +28,18 @@ package Test::Approvals::Reporters::TortoiseDiffReporter;
         $approved =~ s{/}{\\\\}gmisx;
         $received =~ s{/}{\\\\}gmisx;
 
-        my $programs = "C:\\Program Files\\";
-        my $bin      = "TortoiseSVN\\bin\\tortoisemerge.exe";
+        my $bin = "C:\\Program Files\\TortoiseSVN\\bin\\";
+        my $exe      = "tortoisemerge.exe";
         touch($approved);
-        system
-          "start \"Reporter\" \"$programs$bin\" \"$received\" \"$approved\"";
+
+        my $process;
+        Win32::Process::Create(
+            $process,
+            "$bin$exe",
+            "\"$bin$exe\" \"$received\" \"$approved\"",
+            0,
+            DETACHED_PROCESS,
+            Bin());
     }
 }
 
@@ -143,5 +152,6 @@ test "Namer knows received file", sub {
     like( $namer->get_received_file("txt"),
         qr/simple\.t\.namer_knows_received_file\.received\.txt$/ );
 };
+
 
 done_testing();
