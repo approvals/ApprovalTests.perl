@@ -15,42 +15,34 @@ package Test::Approvals::Reporter;
     }
 }
 
-package Test::Approvals::Reporters::TortoiseDiffReporter;
-{
-    use Moose;
-    use File::Touch;
-    use Win32::Process;
-    use FindBin::Real qw(Bin);
-
-    sub report {
-        my ( $self, $approved, $received ) = @_;
-
-        $approved =~ s{/}{\\\\}gmisx;
-        $received =~ s{/}{\\\\}gmisx;
-
-        my $bin = "C:\\Program Files\\TortoiseSVN\\bin\\";
-        my $exe      = "tortoisemerge.exe";
-        touch($approved);
-
-        my $process;
-        Win32::Process::Create(
-            $process,
-            "$bin$exe",
-            "\"$bin$exe\" \"$received\" \"$approved\"",
-            0,
-            DETACHED_PROCESS,
-            Bin());
-    }
-}
-
 package Test::Approvals::Reporters::TestMoreReporter;
 {
     use Moose;
+    use Perl6::Slurp;
+    use Test::More;
+
+    with 'Test::Approvals::Reporters::Reporter';
+
+    sub report {
+        my ( $self, $approved, $received ) = @_;
+        ok(  undef, $self->test_name() );
+    }
 }
 
 package Test::Approvals::Reporters::AndReporter;
 {
     use Moose;
+
+    has reporters => ( is => 'ro' );
+
+    with 'Test::Approvals::Reporters::Reporter';
+
+    sub report {
+        my ( $self, $approved, $received ) = @_;
+        foreach my $reporter ( @{ $self->reporters() } ) {
+            $reporter->report( $approved, $received );
+        }
+    }
 }
 
 package Test::Approvals::Writers::TextWriter;
@@ -79,6 +71,7 @@ use FindBin::Real qw(Bin );
 use Test::More;
 use Test::Approvals::Namer;
 use Test::Approvals::Core::FileApprover qw(verify_files verify_parts);
+use Test::Approvals::Reporters::TortoiseDiffReporter;
 use Readonly;
 
 sub test {
@@ -99,11 +92,11 @@ sub verify {
     );
     my $test_more_reporter =
       Test::Approvals::Reporters::TestMoreReporter->new(
-        name => $namer->test_name() );
+        test_name => $namer->test_name() );
     my $full_reporter =
-      Test::Approvals::Reporters::AndReporter->new( $test_more_reporter,
-        $reporter );
-    verify_parts( $writer, $namer, $reporter );
+      Test::Approvals::Reporters::AndReporter->new(
+        reporters => [ $test_more_reporter, $reporter ] );
+    verify_parts( $writer, $namer, $full_reporter );
 }
 
 {
@@ -152,6 +145,5 @@ test "Namer knows received file", sub {
     like( $namer->get_received_file("txt"),
         qr/simple\.t\.namer_knows_received_file\.received\.txt$/ );
 };
-
 
 done_testing();
