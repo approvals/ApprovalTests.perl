@@ -1,17 +1,20 @@
-package Test::Approvals::Exception;
-{
-    use Exception::Class 'Test::Approvals::Failed';
-}
-
 package Test::Approvals::Core::FileApprover;
 
+use strict;
+use warnings FATAL => 'all';
+
+use version; our $VERSION = qv(0.0.1);
+
+use File::Compare;
 use Test::Builder;
+use Readonly;
+
 require Exporter;
+use base qw(Exporter);
 
-our @EXPORT = qw(verify_files verify_parts);
-our @ISA    = qw(Exporter);
+our @EXPORT_OK = qw(verify_files verify_parts);
 
-my $Test = Test::Builder->new();
+Readonly my $TEST => Test::Builder->new();
 
 sub verify_parts {
     my ( $writer, $namer, $reporter ) = @_;
@@ -19,59 +22,62 @@ sub verify_parts {
       $writer->write( $namer->get_received_file( $writer->file_extension() ) );
     my $approved = $namer->get_approved_file( $writer->file_extension() );
     my $ok = verify_files( $approved, $received, $reporter );
-    $Test->ok($ok, $namer->test_name());
+    $TEST->ok( $ok, $namer->test_name() );
+    return;
 }
 
 sub verify_files {
     my ( $approved_file, $received_file, $reporter ) = @_;
 
-    if ( !-e $approved_file ) {
-        throw_reporter_error( "Approved file does not exist: $approved_file",
-            $approved_file, $received_file, $reporter );
-        return;
-    }
-    elsif ( ( -s $approved_file ) != ( -s $received_file ) ) {
-        throw_reporter_error( "File sizes do not match.",
-            $approved_file, $received_file, $reporter );
-        return;
-    }
-    else {
-        open my $approved_handle, '<', $approved_file;
-        my $approved_byte = 1;
-        open my $received_handle, '<', $received_file;
-        my $received_byte = 1;
+    my $reporter_delegate =
+      _get_reporter_delegate( $approved_file, $received_file, $reporter );
 
-        my $offset = 0;
+    my $approval_exists = _get_comparer(
+        'Approved file does not exist:',
+        sub { ( -e $approved_file ) },
+        $reporter_delegate
+    );
 
-        while ( $approved_byte != 0 ) {
-            if ( $approved_byte != $received_byte ) {
-                close $approved_handle;
-                close $received_handle;
+    my $same_sizes = _get_comparer(
+        'File sizes do not match:',
+        sub { ( -s $approved_file ) == ( -s $received_file ) },
+        $reporter_delegate
+    );
 
-                throw_reporter_error(
-                    "Files do not match.", $approved_file,
-                    $received_file,        $reporter
-                );
+    my $same_content = _get_comparer(
+        'Files do not match:',
+        sub { compare( $approved_file, $received_file ) == 0 },
+        $reporter_delegate
+    );
 
-                return;
-            }
-
-            read $received_handle, $received_byte, 1, $offset;
-            my $offset += read $approved_handle, $approved_byte, 1, $offset;
-        }
-    }
-
-    return 1;
+    return $approval_exists->() && $same_sizes->() && $same_content->();
 }
 
-sub throw_reporter_error {
+sub report {
     my ( $message, $approved_file, $received_file, $reporter ) = @_;
-    print STDERR
-      "$message:\n APPROVED: $approved_file\n RECEIVED: $received_file\n";
+    $TEST->diag(
+        "\n$message\nAPPROVED: $approved_file\nRECEIVED: $received_file\n");
     $reporter->report( $approved_file, $received_file );
+    return;
+}
 
-    #Test::Approvals::Failed->throw( error => $message );
-    #ok(undef, $message);
+sub _get_comparer {
+    my ( $message, $predicate, $reporter_delegate ) = @_;
+    return sub {
+        my $ok = $predicate->();
+        if ( !$ok ) {
+            $reporter_delegate->($message);
+        }
+        return $ok;
+      }
+}
+
+sub _get_reporter_delegate {
+    my ( $approved_file, $received_file, $reporter ) = @_;
+    return sub {
+        my ($message) = @_;
+        report( $message, $approved_file, $received_file, $reporter );
+      }
 }
 
 1;
