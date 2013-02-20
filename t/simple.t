@@ -1,31 +1,20 @@
 #! perl
 
 use strict;
-use warnings;
+use warnings FATAL => 'all';
 
-package Test::Approvals::Reporters::FakeReporter;
-{
-    use Moose;
+use version; our $VERSION = qv(0.0.1);
 
-    has 'was_called', isa => 'Int', is => 'rw', default => 0;
-
-    with 'Test::Approvals::Reporters::Reporter';
-
-    sub report {
-        my ( $self, $approved, $received ) = @_;
-        $self->was_called(1);
-    }
-}
-
-package main;
-use FindBin::Real qw(Bin );
+use FindBin::Real qw(Bin);
 use Test::More;
 use Test::Approvals::Namer;
 use Test::Approvals::Core::FileApprover qw(verify_files verify_parts);
 use Test::Approvals::Reporters::TortoiseDiffReporter;
 use Test::Approvals::Reporters::TestMoreReporter;
 use Test::Approvals::Reporters::AndReporter;
+use Test::Approvals::Reporters::FakeReporter;
 use Test::Approvals::Writers::TextWriter;
+
 use Readonly;
 
 sub test {
@@ -34,6 +23,7 @@ sub test {
     my $working_dir = Bin();
 
     $test_method->( Test::Approvals::Namer->new( test_name => $test_name ) );
+    return;
 }
 
 sub verify {
@@ -51,50 +41,62 @@ sub verify {
       Test::Approvals::Reporters::AndReporter->new(
         reporters => [ $test_more_reporter, $reporter ] );
     verify_parts( $writer, $namer, $full_reporter );
+    return;
 }
 
 {
     Readonly my $REPORTER =>
       Test::Approvals::Reporters::TortoiseDiffReporter->new();
-    verify "Verify Hello World", $REPORTER, sub {
-        return "Hello World";
-    };
 
-    verify "Verify Hello World", $REPORTER, sub {
-        return "Hello World";
+    verify 'Verify Hello World', $REPORTER, sub {
+        return 'Hello World';
     };
 }
 
-test "Approve file doesn't exist.", sub {
+test 'Approve file does not exist', sub {
     my ($namer) = @_;
     my $reporter = Test::Approvals::Reporters::FakeReporter->new();
-    verify_files( "File_that_does_not_exist", "a.txt", $reporter );
+    verify_files( 'file_that_does_not_exist', 'a.txt', $reporter );
     ok( $reporter->was_called(), $namer->test_name() );
 };
 
-test "Test Files Match.", sub {
+test 'Test Files Match', sub {
     my ($namer) = @_;
     my $reporter = Test::Approvals::Reporters::FakeReporter->new();
-    verify_files( "t/a1.txt", "t/a.txt", $reporter );
+    verify_files( 't/a1.txt', 't/a.txt', $reporter );
     ok( !$reporter->was_called(), $namer->test_name() );
 };
 
-test "Namer finds directory.", sub {
+test 'Namer finds directory', sub {
     my ($namer) = @_;
     ok( -e $namer->get_directory() . 'simple.t', $namer->test_name() );
 };
 
-test "Don't need the namer", sub { ok(1); };
-test "Namer knows approval file", sub {
+test 'Namer knows approval file', sub {
     my ($namer) = @_;
-    like( $namer->get_approved_file("txt"),
-        qr/simple\.t\.namer_knows_approval_file\.approved\.txt$/ );
+    like(
+        $namer->get_approved_file('txt'),
+        qr/simple[.]t[.]namer_knows_approval_file[.]approved[.]txt\z/mxs,
+        $namer->test_name()
+    );
 };
 
-test "Namer knows received file", sub {
+test 'Namer knows received file', sub {
     my ($namer) = @_;
-    like( $namer->get_received_file("txt"),
-        qr/simple\.t\.namer_knows_received_file\.received\.txt$/ );
+    like(
+        $namer->get_received_file('txt'),
+        qr/simple[.]t[.]namer_knows_received_file[.]received[.]txt\z/mxs,
+        $namer->test_name()
+    );
+};
+test 'Namer provides dot for extension', sub {
+    my ($namer) = @_;
+    my $name = qr{namer_provides_dot_for_extension}misx;
+    like(
+        $namer->get_received_file('.txt'),
+        qr/simple[.]t[.]$name[.]received[.]txt\z/mxs,
+        $namer->test_name()
+    );
 };
 
 done_testing();

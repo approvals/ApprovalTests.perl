@@ -14,6 +14,7 @@ package Test::Approvals::Namer;
         my $file = Script();
         my $test = $self->test_name();
         my $dir  = $self->get_directory();
+        $extension =~ s{^[.]}{}mixs;
 
         my $full_filename = "$file.$test.$type.$extension";
         $full_filename =~ s/\s/_/gmisx;

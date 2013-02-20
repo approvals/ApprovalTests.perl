@@ -5,17 +5,21 @@ package Test::Approvals::Exception;
 
 package Test::Approvals::Core::FileApprover;
 
+use Test::Builder;
 require Exporter;
 
 our @EXPORT = qw(verify_files verify_parts);
 our @ISA    = qw(Exporter);
+
+my $Test = Test::Builder->new();
 
 sub verify_parts {
     my ( $writer, $namer, $reporter ) = @_;
     my $received =
       $writer->write( $namer->get_received_file( $writer->file_extension() ) );
     my $approved = $namer->get_approved_file( $writer->file_extension() );
-    verify_files( $approved, $received, $reporter );
+    my $ok = verify_files( $approved, $received, $reporter );
+    $Test->ok($ok, $namer->test_name());
 }
 
 sub verify_files {
@@ -24,10 +28,12 @@ sub verify_files {
     if ( !-e $approved_file ) {
         throw_reporter_error( "Approved file does not exist: $approved_file",
             $approved_file, $received_file, $reporter );
+        return;
     }
     elsif ( ( -s $approved_file ) != ( -s $received_file ) ) {
         throw_reporter_error( "File sizes do not match.",
             $approved_file, $received_file, $reporter );
+        return;
     }
     else {
         open my $approved_handle, '<', $approved_file;
@@ -54,6 +60,8 @@ sub verify_files {
             my $offset += read $approved_handle, $approved_byte, 1, $offset;
         }
     }
+
+    return 1;
 }
 
 sub throw_reporter_error {
