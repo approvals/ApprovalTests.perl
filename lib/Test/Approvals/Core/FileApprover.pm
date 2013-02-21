@@ -1,7 +1,8 @@
-package Test::Approvals::Core::FileApprover;
-
+#!perl
 use strict;
 use warnings FATAL => 'all';
+
+package Test::Approvals::Core::FileApprover;
 
 use version; our $VERSION = qv(0.0.1);
 

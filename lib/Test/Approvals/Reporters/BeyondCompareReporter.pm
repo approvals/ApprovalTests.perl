@@ -1,31 +1,25 @@
+#!perl
+
+use strict;
+use warnings FATAL => 'all';
 
 package Test::Approvals::Reporters::BeyondCompareReporter;
 {
+    use version; our $VERSION = qv(0.0.1);
     use Moose;
-    use File::Touch;
-    use Win32::Process;
-    use FindBin::Real qw(Bin);
+    use File::Spec;
 
+    with 'Test::Approvals::Reporters::Win32Launcher';
     with 'Test::Approvals::Reporters::Reporter';
 
-    sub report {
-        my ( $self, $approved, $received ) = @_;
+    sub exe {
+        return File::Spec->catfile( 'C:/Program Files (x86)/Beyond Compare 3/',
+            'BCompare.exe' );
+    }
 
-        $approved =~ s{/}{\\\\}gmisx;
-        $received =~ s{/}{\\\\}gmisx;
-
-        my $bin = "C:\\Program Files (x86)\\Beyond Compare 3\\";
-        my $exe      = "BCompare.exe";
-        touch($approved);
-
-        my $process;
-        Win32::Process::Create(
-            $process,
-            "$bin$exe",
-            "\"$bin$exe\" \"$received\" \"$approved\"",
-            0,
-            DETACHED_PROCESS,
-            Bin());
+    sub argv {
+        return '"RECEIVED" "APPROVED"';
     }
 }
+
 1;
