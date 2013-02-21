@@ -1,6 +1,12 @@
+#!perl
+
+use strict;
+use warnings FATAL => 'all';
+
 package Test::Approvals::Reporters::AndReporter;
 {
     use Moose;
+    use version; our $VERSION = qv(0.0.1);
 
     has reporters => ( is => 'ro' );
 
@@ -11,6 +17,9 @@ package Test::Approvals::Reporters::AndReporter;
         foreach my $reporter ( @{ $self->reporters() } ) {
             $reporter->report( $approved, $received );
         }
+
+        return;
     }
 }
+
 1;
