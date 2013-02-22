@@ -1,31 +1,33 @@
+#!perl
+
+use strict;
+use warnings FATAL => 'all';
 
 package Test::Approvals::Reporters::CodeCompareReporter;
 {
+    use version; our $VERSION = qv(0.0.1);
+
     use Moose;
-    use File::Touch;
-    use Win32::Process;
-    use FindBin::Real qw(Bin);
+    use File::Spec;
 
+    with 'Test::Approvals::Reporters::Win32Launcher';
     with 'Test::Approvals::Reporters::Reporter';
+    with 'Test::Approvals::Reporters::EnvironmentAwareReporter';
 
-    sub report {
-        my ( $self, $approved, $received ) = @_;
+    sub exe {
+        return File::Spec->catfile( 'C:/Program Files/Devart/Code Compare/',
+            'CodeCompare.exe' );
+    }
 
-        $approved =~ s{/}{\\\\}gmisx;
-        $received =~ s{/}{\\\\}gmisx;
+    sub argv {
+        return '/ENVIRONMENT=standalone "RECEIVED" "APPROVED"';
+    }
 
-        my $bin = "C:\\Program Files\\Devart\\Code Compare\\";
-        my $exe      = "CodeCompare.exe";
-        touch($approved);
-
-        my $process;
-        Win32::Process::Create(
-            $process,
-            "$bin$exe",
-            "\"$bin$exe\" /ENVIRONMENT=standalone \"$received\" \"$approved\"",
-            0,
-            DETACHED_PROCESS,
-            Bin());
+    sub is_working_in_this_environment {
+        my ($self) = @_;
+        return $self->default_is_working_in_this_environment();
     }
 }
+__PACKAGE__->meta->make_immutable;
+
 1;

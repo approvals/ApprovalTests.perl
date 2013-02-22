@@ -10,6 +10,8 @@ use Test::More;
 use Test::Approvals::Namer;
 use Test::Approvals::Core::FileApprover qw(verify_files verify_parts);
 use Test::Approvals::Reporters::BeyondCompareReporter;
+use Test::Approvals::Reporters::CodeCompareReporter;
+use Test::Approvals::Reporters::FirstWorkingReporter;
 use Test::Approvals::Reporters::TestMoreReporter;
 use Test::Approvals::Reporters::AndReporter;
 use Test::Approvals::Reporters::FakeReporter;
@@ -46,7 +48,12 @@ sub verify {
 
 {
     Readonly my $REPORTER =>
-      Test::Approvals::Reporters::BeyondCompareReporter->new();
+      Test::Approvals::Reporters::FirstWorkingReporter->new(
+        reporters => [
+            Test::Approvals::Reporters::BeyondCompareReporter->new(),
+            Test::Approvals::Reporters::CodeCompareReporter->new(),
+        ]
+      );
 
     verify 'Verify Hello World', $REPORTER, sub {
         return 'Hello World';
