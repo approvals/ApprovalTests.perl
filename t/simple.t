@@ -16,6 +16,7 @@ use Test::Approvals::Reporters::TestMoreReporter;
 use Test::Approvals::Reporters::AndReporter;
 use Test::Approvals::Reporters::FakeReporter;
 use Test::Approvals::Writers::TextWriter;
+use Test::Approvals::Reporters::IntroductionReporter;
 
 use Readonly;
 
@@ -30,6 +31,8 @@ sub test {
 
 sub verify {
     my ( $test_name, $reporter, $test_method ) = @_;
+    $reporter =
+      $reporter || Test::Approvals::Reporters::IntroductionReporter->new();
     my $namer  = Test::Approvals::Namer->new( test_name => $test_name );
     my $result = $test_method->($namer);
     my $writer = Test::Approvals::Writers::TextWriter->new(
@@ -47,13 +50,7 @@ sub verify {
 }
 
 {
-    Readonly my $REPORTER =>
-      Test::Approvals::Reporters::FirstWorkingReporter->new(
-        reporters => [
-            Test::Approvals::Reporters::BeyondCompareReporter->new(),
-            Test::Approvals::Reporters::CodeCompareReporter->new(),
-        ]
-      );
+    Readonly my $REPORTER => undef;
 
     verify 'Verify Hello World', $REPORTER, sub {
         return 'Hello World';
