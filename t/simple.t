@@ -9,14 +9,8 @@ use FindBin::Real qw(Bin);
 use Test::More;
 use Test::Approvals::Namer;
 use Test::Approvals::Core::FileApprover qw(verify_files verify_parts);
-use Test::Approvals::Reporters::BeyondCompareReporter;
-use Test::Approvals::Reporters::CodeCompareReporter;
-use Test::Approvals::Reporters::FirstWorkingReporter;
-use Test::Approvals::Reporters::TestMoreReporter;
-use Test::Approvals::Reporters::AndReporter;
-use Test::Approvals::Reporters::FakeReporter;
+use Test::Approvals::Reporters;
 use Test::Approvals::Writers::TextWriter;
-use Test::Approvals::Reporters::IntroductionReporter;
 
 use Readonly;
 
@@ -50,7 +44,14 @@ sub verify {
 }
 
 {
-    Readonly my $REPORTER => undef;
+    Readonly my $REPORTER =>
+      Test::Approvals::Reporters::FirstWorkingReporter->new(
+        reporters => [
+            Test::Approvals::Reporters::BeyondCompareReporter->new(),
+            Test::Approvals::Reporters::CodeCompareReporter->new(),
+            Test::Approvals::Reporters::TortoiseDiffReporter->new(),
+        ]
+      );
 
     verify 'Verify Hello World', $REPORTER, sub {
         return 'Hello World';
