@@ -3,7 +3,7 @@
 use strict;
 use warnings FATAL => 'all';
 
-package Test::Approvals::Reporters::BeyondCompareReporter;
+package Test::Approvals::Reporters::KDiffReporter;
 {
     use version; our $VERSION = qv(0.0.1);
     use Moose;
@@ -13,7 +13,7 @@ package Test::Approvals::Reporters::BeyondCompareReporter;
     with 'Test::Approvals::Reporters::EnvironmentAwareReporter';
 
     sub exe {
-        return locate_exe( 'Beyond Compare 3/', 'BCompare.exe' );
+        return locate_exe( 'KDiff3', 'kdiff3.exe' );
     }
 
     sub argv {
@@ -26,4 +26,5 @@ package Test::Approvals::Reporters::BeyondCompareReporter;
     }
 }
 __PACKAGE__->meta->make_immutable;
+
 1;

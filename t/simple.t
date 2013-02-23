@@ -49,6 +49,7 @@ sub verify {
         reporters => [
             Test::Approvals::Reporters::BeyondCompareReporter->new(),
             Test::Approvals::Reporters::CodeCompareReporter->new(),
+            Test::Approvals::Reporters::KDiffReporter->new(),
             Test::Approvals::Reporters::TortoiseDiffReporter->new(),
         ]
       );

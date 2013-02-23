@@ -6,17 +6,14 @@ use warnings FATAL => 'all';
 package Test::Approvals::Reporters::CodeCompareReporter;
 {
     use version; our $VERSION = qv(0.0.1);
-
     use Moose;
-    use File::Spec;
 
     with 'Test::Approvals::Reporters::Win32Launcher';
     with 'Test::Approvals::Reporters::Reporter';
     with 'Test::Approvals::Reporters::EnvironmentAwareReporter';
 
     sub exe {
-        return File::Spec->catfile( 'C:/Program Files/Devart/Code Compare/',
-            'CodeCompare.exe' );
+        return locate_exe( 'Devart/Code Compare/', 'CodeCompare.exe' );
     }
 
     sub argv {

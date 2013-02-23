@@ -34,6 +34,38 @@ package Test::Approvals::Reporters::Win32Launcher;
         return;
     }
 
+    sub default_argv {
+        return '"RECEIVED" "APPROVED"';
+    }
+
+    sub locate_exe {
+        my ( $relative_path, $exe ) = @_;
+
+        my $find_in_path = sub {
+            my $location = `where $exe`;
+            if ( defined $location ) {
+                chomp $location;
+                return $location;
+            }
+            return;
+        };
+
+        my $find_in_x86 = sub {
+            my $location = File::Spec->catfile( 'C:/Program Files (x86)',
+                $relative_path, $exe );
+            if ( -e $location ) {
+                return $location;
+            }
+            return;
+        };
+
+        my $default = sub {
+            return File::Spec->catfile( 'C:/Program Files', $relative_path,
+                $exe );
+        };
+
+        return $find_in_path->() || $find_in_x86->() || $default->();
+    }
 }
 
 1;
