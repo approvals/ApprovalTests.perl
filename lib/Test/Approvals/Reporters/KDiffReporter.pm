@@ -19,11 +19,6 @@ package Test::Approvals::Reporters::KDiffReporter;
     sub argv {
         return default_argv();
     }
-
-    sub is_working_in_this_environment {
-        my ($self) = @_;
-        return $self->default_is_working_in_this_environment();
-    }
 }
 __PACKAGE__->meta->make_immutable;
 
