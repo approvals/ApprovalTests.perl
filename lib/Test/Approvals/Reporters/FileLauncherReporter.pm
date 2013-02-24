@@ -14,20 +14,15 @@ package Test::Approvals::Reporters::FileLauncherReporter;
         $approved =~ s{/}{\\\\}gmisx;
         $received =~ s{/}{\\\\}gmisx;
 
-        my $exe      = `where cmd.exe`;
+        my $exe = `where cmd.exe`;
         chomp $exe;
         $exe =~ s{\\}{\\\\}gmisx;
 
         touch($approved);
 
         my $process;
-        Win32::Process::Create(
-            $process,
-            "$exe",
-            "\"$exe\" /C \"$received\"",
-            0,
-            DETACHED_PROCESS,
-            Bin());
+        Win32::Process::Create( $process, "$exe", "\"$exe\" /C \"$received\"",
+            0, DETACHED_PROCESS, Bin() );
     }
 }
 1;

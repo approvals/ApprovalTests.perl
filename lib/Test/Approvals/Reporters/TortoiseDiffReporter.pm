@@ -15,17 +15,13 @@ package Test::Approvals::Reporters::TortoiseDiffReporter;
         $received =~ s{/}{\\\\}gmisx;
 
         my $bin = "C:\\Program Files\\TortoiseSVN\\bin\\";
-        my $exe      = "tortoisemerge.exe";
+        my $exe = "tortoisemerge.exe";
         touch($approved);
 
         my $process;
-        Win32::Process::Create(
-            $process,
-            "$bin$exe",
+        Win32::Process::Create( $process, "$bin$exe",
             "\"$bin$exe\" \"$received\" \"$approved\"",
-            0,
-            DETACHED_PROCESS,
-            Bin());
+            0, DETACHED_PROCESS, Bin() );
     }
 }
 1;

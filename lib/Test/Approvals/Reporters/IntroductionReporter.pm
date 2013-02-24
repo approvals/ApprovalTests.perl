@@ -12,8 +12,8 @@ package Test::Approvals::Reporters::IntroductionReporter;
 
     with 'Test::Approvals::Reporters::Reporter';
 
-    sub report{
-        my $test = Test::Builder->new();
+    sub report {
+        my $test    = Test::Builder->new();
         my $message = <<EOF;
 Welcome to ApprovalTests for Perl (Test::Approvals).
 ApprovalTests use a reporter to show you results when your test fails.

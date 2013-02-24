@@ -1,5 +1,5 @@
 #! perl
 package Test::Approvals;
 {
-	
+
 }
