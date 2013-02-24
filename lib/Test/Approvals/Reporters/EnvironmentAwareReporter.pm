@@ -9,9 +9,9 @@ package Test::Approvals::Reporters::EnvironmentAwareReporter;
 
     use Moose::Role;
 
-    requires qw(is_working_in_this_environment);
+    requires qw(exe);
 
-    sub default_is_working_in_this_environment {
+    sub is_working_in_this_environment {
         my ($self) = @_;
         return ( -e $self->exe() );
     }

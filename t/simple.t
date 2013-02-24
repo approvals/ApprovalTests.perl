@@ -44,15 +44,7 @@ sub verify {
 }
 
 {
-    Readonly my $REPORTER =>
-      Test::Approvals::Reporters::FirstWorkingReporter->new(
-        reporters => [
-            Test::Approvals::Reporters::BeyondCompareReporter->new(),
-            Test::Approvals::Reporters::CodeCompareReporter->new(),
-            Test::Approvals::Reporters::KDiffReporter->new(),
-            Test::Approvals::Reporters::TortoiseDiffReporter->new(),
-        ]
-      );
+    Readonly my $REPORTER => Test::Approvals::Reporters::DiffReporter->new();
 
     verify 'Verify Hello World', $REPORTER, sub {
         return 'Hello World';
@@ -68,8 +60,16 @@ test 'Approve file does not exist', sub {
 
 test 'Test Files Match', sub {
     my ($namer) = @_;
+
+    my $writer = Test::Approvals::Writers::TextWriter->new( result => "a.txt" );
+    my $approved = 't/a1.txt';
+    $writer->write($approved);
+
+    my $received = 't/a.txt';
+    $writer->write($received);
+
     my $reporter = Test::Approvals::Reporters::FakeReporter->new();
-    verify_files( 't/a1.txt', 't/a.txt', $reporter );
+    verify_files( $approved, $received, $reporter );
     ok( !$reporter->was_called(), $namer->test_name() );
 };
 

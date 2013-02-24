@@ -51,7 +51,11 @@ sub verify_files {
         $reporter_delegate
     );
 
-    return $approval_exists->() && $same_sizes->() && $same_content->();
+    my $ok = $approval_exists->() && $same_sizes->() && $same_content->();
+    if ($ok) {
+        unlink $received_file;
+    }
+    return $ok;
 }
 
 sub report {

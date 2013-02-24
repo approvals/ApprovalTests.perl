@@ -41,15 +41,15 @@ package Test::Approvals::Reporters::FirstWorkingReporter;
         return;
     };
 
-    sub is_working_in_this_environment {
-        my ($self) = @_;
+    around is_working_in_this_environment => sub {
+        my ( $method, $self ) = @_;
         return any {
             does_role( $_,
                 'Test::Approvals::Reporters::EnvironmentAwareReporter' )
               && $_->is_working_in_this_environment();
         }
         @{ $self->reporters() };
-    }
+    };
 }
 __PACKAGE__->meta->make_immutable;
 1;

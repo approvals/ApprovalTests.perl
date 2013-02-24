@@ -1,0 +1,49 @@
+#!perl
+
+use strict;
+use warnings FATAL => 'all';
+
+package Test::Approvals::Reporters::DiffReporter;
+{
+    use version; our $VERSION = qv(0.0.1);
+    use Moose;
+
+    has exe  => ( is => 'ro', isa => 'Str', default => q{} );
+    has argv => ( is => 'ro', isa => 'Str', default => q{} );
+    has reporter => ( is => 'ro' );
+
+    with 'Test::Approvals::Reporters::Win32Launcher';
+    with 'Test::Approvals::Reporters::Reporter';
+    with 'Test::Approvals::Reporters::EnvironmentAwareReporter';
+
+    sub BUILD {
+        my ($self) = @_;
+        $self->{reporter} =
+          Test::Approvals::Reporters::FirstWorkingReporter->new(
+            reporters => [
+                Test::Approvals::Reporters::BeyondCompareReporter->new(),
+                Test::Approvals::Reporters::CodeCompareReporter->new(),
+                Test::Approvals::Reporters::TortoiseDiffReporter->new(),
+                Test::Approvals::Reporters::KDiffReporter->new(),
+            ]
+          );
+        return;
+    }
+
+    around report => sub {
+        my ( $method, $self, $approved, $received ) = @_;
+        my $reporter = $self->reporter();
+        $reporter->report( $approved, $received );
+        return;
+    };
+
+    around is_working_in_this_environment => sub {
+        my ( $method, $self ) = @_;
+        my $reporter = $self->reporter();
+
+        return $reporter->is_working_in_this_environment();
+    };
+
+}
+__PACKAGE__->meta->make_immutable;
+1;
