@@ -14,8 +14,8 @@ package Test::Approvals::Reporters::Win32Launcher;
         my $exe  = $self->exe();
         my $argv = $self->argv();
 
-        $argv =~ s/RECEIVED/$received/misx;
-        $argv =~ s/APPROVED/$approved/misx;
+        $argv =~ s/RECEIVED/$received/gmisx;
+        $argv =~ s/APPROVED/$approved/gmisx;
 
         my $process;
         Win32::Process::Create( $process, "$exe", "\"$exe\" $argv",

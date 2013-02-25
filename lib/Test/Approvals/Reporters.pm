@@ -7,6 +7,7 @@ use Test::Approvals::Reporters::FileLauncherReporter;
 use Test::Approvals::Reporters::FirstWorkingReporter;
 use Test::Approvals::Reporters::IntroductionReporter;
 use Test::Approvals::Reporters::KDiffReporter;
+use Test::Approvals::Reporters::P4MergeReporter;
 use Test::Approvals::Reporters::TestMoreReporter;
 use Test::Approvals::Reporters::TortoiseDiffReporter;
 

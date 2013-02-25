@@ -7,6 +7,7 @@ package Test::Approvals::Reporters::DiffReporter;
 {
     use version; our $VERSION = qv(0.0.1);
     use Moose;
+    use Test::Approvals::Reporters;
 
     has exe  => ( is => 'ro', isa => 'Str', default => q{} );
     has argv => ( is => 'ro', isa => 'Str', default => q{} );
@@ -25,6 +26,7 @@ package Test::Approvals::Reporters::DiffReporter;
                 Test::Approvals::Reporters::CodeCompareReporter->new(),
                 Test::Approvals::Reporters::TortoiseDiffReporter->new(),
                 Test::Approvals::Reporters::KDiffReporter->new(),
+                Test::Approvals::Reporters::P4MergeReporter->new(),
             ]
           );
         return;

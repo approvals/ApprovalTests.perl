@@ -18,5 +18,6 @@ package Test::Approvals::Reporters::FakeReporter;
         return;
     }
 }
+__PACKAGE__->meta->make_immutable;
 
 1;
