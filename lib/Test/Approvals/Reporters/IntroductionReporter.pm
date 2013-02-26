@@ -31,3 +31,16 @@ EOF
 __PACKAGE__->meta->make_immutable;
 
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::IntroductionReporter - Print diagnostic message 
+explaining reporter usage.
+
+=head2 report
+
+    my $received = 'test.received.txt';
+    my $approved = 'test.approved.txt';
+    $reporter->report($received, $approved);
+
+Print diagnostic message on failure.

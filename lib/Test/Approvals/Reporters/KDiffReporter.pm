@@ -23,3 +23,19 @@ package Test::Approvals::Reporters::KDiffReporter;
 __PACKAGE__->meta->make_immutable;
 
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::KDiffReporter - Report failure with KDiff.
+
+=head2 argv
+
+    my $argv = $reporter->argv();
+
+Retrieve the argument template used to invoke the reporter from the shell.
+
+=head2 exe
+
+    my $exe = $reporter->exe();
+
+Retrieve the path to the reporter's executable.

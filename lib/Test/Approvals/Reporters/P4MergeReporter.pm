@@ -29,11 +29,14 @@ __END__
 Test::Approvals::Reporters::P4MergeReporter - Report failures with 
 P4Merge
 
-=head2 report
+=head2 argv
 
-    my $received = 'test.received.txt';
-    my $approved = 'test.approved.txt';
-    $reporter->report($received, $approved);
+    my $argv = $reporter->argv();
 
-Normalize the paths to received and approved files, then try to launch the diff
-utility.    
+Retrieve the argument template used to invoke the reporter from the shell.
+
+=head2 exe
+
+    my $exe = $reporter->exe();
+
+Retrieve the path to the reporter's executable.
