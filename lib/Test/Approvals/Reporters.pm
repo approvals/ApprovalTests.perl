@@ -10,5 +10,6 @@ use Test::Approvals::Reporters::KDiffReporter;
 use Test::Approvals::Reporters::P4MergeReporter;
 use Test::Approvals::Reporters::TestMoreReporter;
 use Test::Approvals::Reporters::TortoiseDiffReporter;
+use Test::Approvals::Reporters::WinMergeReporter;
 
 1;

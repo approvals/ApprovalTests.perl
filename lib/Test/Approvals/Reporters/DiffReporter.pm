@@ -22,6 +22,7 @@ package Test::Approvals::Reporters::DiffReporter;
         $self->{reporter} =
           Test::Approvals::Reporters::FirstWorkingReporter->new(
             reporters => [
+                Test::Approvals::Reporters::WinMergeReporter->new(),
                 Test::Approvals::Reporters::BeyondCompareReporter->new(),
                 Test::Approvals::Reporters::CodeCompareReporter->new(),
                 Test::Approvals::Reporters::TortoiseDiffReporter->new(),
