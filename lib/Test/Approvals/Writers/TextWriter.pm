@@ -18,4 +18,18 @@ package Test::Approvals::Writers::TextWriter;
         return $path;
     }
 }
+__PACKAGE__->meta->make_immutable;
+
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Writers::TextWriter - Write results to text files.
+
+=head2 write
+
+    my $path = 'foo.txt';
+    $path = $writer->write($path);
+
+Write the contents of the result property to $path, and return the path to 
+the written path.

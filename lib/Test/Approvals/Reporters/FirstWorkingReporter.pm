@@ -16,7 +16,7 @@ package Test::Approvals::Reporters::FirstWorkingReporter;
     use List::MoreUtils qw(any);
 
     with 'Test::Approvals::Reporters::MultiReporter';
-    with 'Test::Approvals::Reporters::Win32Launcher';
+    with 'Test::Approvals::Reporters::Win32Reporter';
     with 'Test::Approvals::Reporters::Reporter';
     with 'Test::Approvals::Reporters::EnvironmentAwareReporter';
 

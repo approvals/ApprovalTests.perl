@@ -8,7 +8,7 @@ package Test::Approvals::Reporters::FileLauncherReporter;
     use version; our $VERSION = qv(0.0.1);
     use Moose;
 
-    with 'Test::Approvals::Reporters::Win32Launcher';
+    with 'Test::Approvals::Reporters::Win32Reporter';
     with 'Test::Approvals::Reporters::Reporter';
     with 'Test::Approvals::Reporters::EnvironmentAwareReporter';
 

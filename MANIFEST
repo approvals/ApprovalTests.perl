@@ -17,7 +17,7 @@ lib/Test/Approvals/Reporters/P4MergeReporter.pm
 lib/Test/Approvals/Reporters/Reporter.pm
 lib/Test/Approvals/Reporters/TestMoreReporter.pm
 lib/Test/Approvals/Reporters/TortoiseDiffReporter.pm
-lib/Test/Approvals/Reporters/Win32Launcher.pm
+lib/Test/Approvals/Reporters/Win32Reporter.pm
 lib/Test/Approvals/Reporters/WinMergeReporter.pm
 lib/Test/Approvals/Writers/TextWriter.pm
 lib/Test/Approvals/Namer.pm
