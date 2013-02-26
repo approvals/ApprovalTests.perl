@@ -23,3 +23,17 @@ package Test::Approvals::Reporters::P4MergeReporter;
 __PACKAGE__->meta->make_immutable;
 
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::P4MergeReporter - Report failures with 
+P4Merge
+
+=head2 report
+
+    my $received = 'test.received.txt';
+    my $approved = 'test.approved.txt';
+    $reporter->report($received, $approved);
+
+Normalize the paths to received and approved files, then try to launch the diff
+utility.    

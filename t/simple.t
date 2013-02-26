@@ -34,7 +34,7 @@ sub verify {
         file_extension => '.txt'
     );
     my $test_more_reporter =
-      Test::Approvals::Reporters::TestMoreReporter->new(
+      Test::Approvals::Reporters::TestBuilderReporter->new(
         test_name => $namer->test_name() );
     my $full_reporter =
       Test::Approvals::Reporters::AndReporter->new(

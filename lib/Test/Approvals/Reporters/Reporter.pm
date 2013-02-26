@@ -13,3 +13,8 @@ package Test::Approvals::Reporters::Reporter;
     requires qw(report);
 }
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::Reporter - Defines a role for reporters to 
+extend.

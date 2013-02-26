@@ -15,7 +15,7 @@ lib/Test/Approvals/Reporters/KDiffReporter.pm
 lib/Test/Approvals/Reporters/MultiReporter.pm
 lib/Test/Approvals/Reporters/P4MergeReporter.pm
 lib/Test/Approvals/Reporters/Reporter.pm
-lib/Test/Approvals/Reporters/TestMoreReporter.pm
+lib/Test/Approvals/Reporters/TestBuilderReporter.pm
 lib/Test/Approvals/Reporters/TortoiseDiffReporter.pm
 lib/Test/Approvals/Reporters/Win32Reporter.pm
 lib/Test/Approvals/Reporters/WinMergeReporter.pm
