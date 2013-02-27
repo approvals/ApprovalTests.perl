@@ -50,3 +50,13 @@ package Test::Approvals::Reporters::DiffReporter;
 }
 __PACKAGE__->meta->make_immutable;
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::DiffReporter - A reporter configured to choose 
+the first working diff utility it can find and use it for reporting.
+
+=head2 BUILD
+
+Used internally to configure a FirstWorkingReporter with instances of available
+diff Reporters.

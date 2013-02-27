@@ -15,7 +15,6 @@ package Test::Approvals::Reporters::EnvironmentAwareReporter;
         my ($self) = @_;
         return ( -e $self->exe() );
     }
-
 }
 1;
 __END__
