@@ -22,3 +22,21 @@ package Test::Approvals::Reporters::FileLauncherReporter;
 }
 __PACKAGE__->meta->make_immutable;
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::FileLauncherReporter - Use Windows file associations
+to display the file.
+
+=head2 argv
+
+    my $argv = $reporter->argv();
+
+Retrieve the argument template used to ask the shell to find an application 
+to display the file.
+
+=head2 exe
+
+    my $exe = $reporter->exe();
+
+Retrieve the path to the shell.

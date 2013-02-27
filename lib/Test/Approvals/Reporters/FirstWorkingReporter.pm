@@ -54,3 +54,26 @@ package Test::Approvals::Reporters::FirstWorkingReporter;
 }
 __PACKAGE__->meta->make_immutable;
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::FirstWorkingReporter - Report using the first 
+reporter that appears to be working in the test environment.
+
+=head1 SYNOPSIS
+    
+    use Test::Approvals::Reporters;
+
+    my @reporters = (
+        Test::Approvals::Reporters::BeyondCompareReporter->new(),
+        Test::Approvals::Reporters::CodeCompareReporter->new(),
+    );
+
+    my $reporter = Test::Approvals::Reporters::FirstWorkingReporter->new(
+        reporters => \@reporters
+    );
+
+    my $received = 'test.received.txt';
+    my $approved = 'test.approved.txt';
+    $reporter->report($received, $approved);
+
