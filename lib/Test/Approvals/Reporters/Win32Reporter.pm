@@ -69,6 +69,7 @@ package Test::Approvals::Reporters::Win32Reporter;
 }
 
 1;
+
 =head1 NAME
 
 Test::Approvals::Reporters::Win32Reporter - Generic base for creating reporters

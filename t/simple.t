@@ -7,19 +7,24 @@ use version; our $VERSION = qv(0.0.1);
 
 use FindBin::Real qw(Bin);
 use Test::More;
-use Test::Approvals::Namer;
+use Test::Approvals::Namers::DefaultNamer;
 use Test::Approvals::Core::FileApprover qw(verify_files verify_parts);
 use Test::Approvals::Reporters;
 use Test::Approvals::Writers::TextWriter;
-
 use Readonly;
+
+sub Namer {
+    my %args = @_;
+    return Test::Approvals::Namers::DefaultNamer->new(
+        test_name => $args{test_name} );
+}
 
 sub test {
     my ( $test_name, $test_method ) = @_;
 
     my $working_dir = Bin();
 
-    $test_method->( Test::Approvals::Namer->new( test_name => $test_name ) );
+    $test_method->( Namer( test_name => $test_name ) );
     return;
 }
 
@@ -27,7 +32,7 @@ sub verify {
     my ( $test_name, $reporter, $test_method ) = @_;
     $reporter =
       $reporter || Test::Approvals::Reporters::IntroductionReporter->new();
-    my $namer  = Test::Approvals::Namer->new( test_name => $test_name );
+    my $namer  = Namer( test_name => $test_name );
     my $result = $test_method->($namer);
     my $writer = Test::Approvals::Writers::TextWriter->new(
         result         => $result,
@@ -49,6 +54,9 @@ sub verify {
     verify 'Verify Hello World', $REPORTER, sub {
         return 'Hello World';
     };
+
+    use Test::More::Behaviour;
+
 }
 
 test 'Approve file does not exist', sub {

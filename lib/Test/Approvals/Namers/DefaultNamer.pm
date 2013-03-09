@@ -1,4 +1,4 @@
-package Test::Approvals::Namer;
+package Test::Approvals::Namers::DefaultNamer;
 {
     use Moose;
     use FindBin::Real qw(Bin Script);

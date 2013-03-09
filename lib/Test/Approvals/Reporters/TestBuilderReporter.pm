@@ -7,7 +7,7 @@ package Test::Approvals::Reporters::TestBuilderReporter;
 
     with 'Test::Approvals::Reporters::Reporter';
 
-	Readonly my $TEST => Test::Builder->new();
+    Readonly my $TEST => Test::Builder->new();
 
     sub report {
         my ( $self, $approved, $received ) = @_;
