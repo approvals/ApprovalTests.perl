@@ -29,7 +29,7 @@ sub test {
 }
 
 sub verify {
-    my ( $test_name, $reporter, $test_method ) = @_;
+    my ( $test_name, $reporter, $test_method, ) = @_;
     $reporter =
       $reporter || Test::Approvals::Reporters::IntroductionReporter->new();
     my $namer  = Namer( test_name => $test_name );
@@ -54,8 +54,6 @@ sub verify {
     verify 'Verify Hello World', $REPORTER, sub {
         return 'Hello World';
     };
-
-    use Test::More::Behaviour;
 
 }
 

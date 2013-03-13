@@ -3,12 +3,12 @@ package Test::Approvals::Namers::SubfolderNamer;
     use Moose;
     use FindBin::Real qw(Bin Script);
 
-    has test_name =>( is => 'rw', isa => 'Str');
-    has approval_folder => (is=>'rw', isa=>'Str', default=>q{.});
+    has test_name => ( is => 'rw', isa => 'Str' );
+    has approval_folder => ( is => 'rw', isa => 'Str', default => q{.} );
 
     sub get_directory {
-        my($self)=@_;
-        return File::Spec->catfile( Bin(), $self->approval_folder()) ;
+        my ($self) = @_;
+        return File::Spec->catfile( Bin(), $self->approval_folder() );
     }
 
     sub get_filename {
@@ -21,7 +21,7 @@ package Test::Approvals::Namers::SubfolderNamer;
         my $full_filename = "$file.$test.$type.$extension";
         $full_filename =~ s/\s/_/gmisx;
         $full_filename = lc $full_filename;
-        return File::Spec->catfile($dir,$full_filename);
+        return File::Spec->catfile( $dir, $full_filename );
     }
 
     sub get_approved_file {
