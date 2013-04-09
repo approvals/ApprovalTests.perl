@@ -31,7 +31,8 @@ sub it {
 }
 
 sub run_tests {
-    $TEST->plan( tests => scalar @specs );
+    my $other_tests = shift // 0;
+    $TEST->plan( tests => ( scalar @specs + $other_tests ) );
     for (@specs) { $_->(); }
     return;
 }

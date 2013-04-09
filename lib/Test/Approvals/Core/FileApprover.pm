@@ -13,18 +13,22 @@ use Readonly;
 require Exporter;
 use base qw(Exporter);
 
-our @EXPORT_OK = qw(verify_files verify_parts);
+our @EXPORT_OK = qw(verify verify_files verify_parts);
 
 Readonly my $TEST => Test::Builder->new();
+
+sub verify {
+    my($writer, $namer, $reporter)=@_;
+    return verify_parts($writer, $namer, $reporter);
+}
 
 sub verify_parts {
     my ( $writer, $namer, $reporter ) = @_;
     my $received =
-      $writer->write( $namer->get_received_file( $writer->file_extension() ) );
+      $writer->write_to( $namer->get_received_file( $writer->file_extension() ) );
     my $approved = $namer->get_approved_file( $writer->file_extension() );
-    my $ok = verify_files( $approved, $received, $reporter );
-    $TEST->ok( $ok, $namer->test_name() );
-    return;
+    return verify_files( $approved, $received, $reporter );
+    # return $TEST->ok( $ok, $namer->name );
 }
 
 sub verify_files {
