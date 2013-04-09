@@ -4,6 +4,8 @@ use warnings FATAL => qw(all);
 
 package Test::Approvals::Namers::DefaultNamer;
 {
+    use version; our $VERSION = qv(0.0.1);
+
     use Moose;
     use File::Spec;
     use FindBin::Real qw(Bin Script);
@@ -22,18 +24,18 @@ package Test::Approvals::Namers::DefaultNamer;
         my $full_filename = "$file.$test.$type.$extension";
         $full_filename =~ s/\s/_/gmisx;
         $full_filename = lc $full_filename;
-        return File::Spec->catfile ($dir, $full_filename);
+        return File::Spec->catfile( $dir, $full_filename );
     }
 
     sub get_approved_file {
         my ( $self, $extension ) = @_;
-        return get_filename( $self, $extension, "approved" );
+        return get_filename( $self, $extension, 'approved' );
 
     }
 
     sub get_received_file {
         my ( $self, $extension ) = @_;
-        return get_filename( $self, $extension, "received" );
+        return get_filename( $self, $extension, 'received' );
     }
 }
 
