@@ -1,35 +1,34 @@
+#! perl
+use strict;
+use warnings FATAL => qw(all);
+
 package Test::Approvals::Writers::TextWriter;
 {
     use Moose;
     use Carp;
     use English qw(-no_match_vars);
+    use version; our $VERSION = qv(0.0.1);
 
     has result         => ( is => 'ro', isa => 'Str', default => q{} );
     has file_extension => ( is => 'ro', isa => 'Str', default => 'txt' );
 
-    sub write {
+    sub write_to {
         my ( $self, $path ) = @_;
         open my $file, '>', $path
           or croak "Could not open $path for writing: $OS_ERROR";
-        print {$file} $self->result()
+        $self->print_to($file)
           or croak "Could not write to $path: $OS_ERROR";
         close $file or croak "Could not close $path after writing: $OS_ERROR";
 
         return $path;
+    }
+
+    sub print_to {
+        my ( $self, $h ) = @_;
+        return $h->print( $self->result() );
     }
 }
 __PACKAGE__->meta->make_immutable;
 
 1;
 __END__
-=head1 NAME
-
-Test::Approvals::Writers::TextWriter - Write results to text files.
-
-=head2 write
-
-    my $path = 'foo.txt';
-    $path = $writer->write($path);
-
-Write the contents of the result property to $path, and return the path to 
-the written path.
