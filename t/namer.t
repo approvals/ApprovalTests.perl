@@ -4,30 +4,8 @@ use warnings FATAL => qw(all);
 use version; our $VERSION = qv(0.0.1);
 
 use Test::Approvals::Namers::DefaultNamer;
+use Test::Approvals::Specs qw(describe it run_tests);
 use Test::More;
-
-my $context;
-my @specs;
-
-sub describe {
-    $context = shift;
-    my $specs = shift;
-    $specs->();
-    return;
-}
-
-sub it {
-    my $name = shift;
-    my $spec = shift;
-    push @specs, sub { $spec->("$context $name") };
-    return;
-}
-
-sub run_tests {
-    plan tests => scalar @specs;
-    for (@specs) { $_->(); }
-    return;
-}
 
 describe 'A Namer', sub {
     my $n = Test::Approvals::Namers::DefaultNamer->new(
