@@ -23,18 +23,3 @@ package Test::Approvals::Reporters::WinMergeReporter;
 __PACKAGE__->meta->make_immutable;
 1;
 __END__
-=head1 NAME
-
-Test::Approvals::Reporters::WinMergeReporter - Report failure with WinMerge.
-
-=head2 argv
-
-    my $argv = $reporter->argv();
-
-Retrieve the argument template used to invoke the reporter from the shell.
-
-=head2 exe
-
-    my $exe = $reporter->exe();
-
-Retrieve the path to the reporter's executable.

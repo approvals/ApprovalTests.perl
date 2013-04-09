@@ -10,7 +10,7 @@ package Test::Approvals::Reporters::Win32Reporter;
     requires qw(exe argv);
 
     sub launch {
-        my ( $self, $received, $approved ) = @_;
+        my ( $self,  $received, $approved, ) = @_;
         my $exe  = $self->exe();
         my $argv = $self->argv();
 
@@ -24,7 +24,7 @@ package Test::Approvals::Reporters::Win32Reporter;
     }
 
     sub report {
-        my ( $self, $approved, $received ) = @_;
+        my ( $self,  $received, $approved, ) = @_;
 
         $approved = File::Spec->canonpath($approved);
         $received = File::Spec->canonpath($received);
@@ -69,7 +69,7 @@ package Test::Approvals::Reporters::Win32Reporter;
 }
 
 1;
-
+__END__
 =head1 NAME
 
 Test::Approvals::Reporters::Win32Reporter - Generic base for creating reporters
