@@ -29,6 +29,20 @@ describe 'A TextWriter', sub {
         close $out;
         is $out_buf, 'Hello', $spec;
     };
+
+    it 'Stores the result type', sub {
+        my ($spec) = @_;
+        is $w->file_extension, 'txt', $spec;
+    };
+
+    it 'Lets the caller choose the result type', sub {
+        my ($spec) = @_;
+        my $x = Test::Approvals::Writers::TextWriter->new(
+            result         => 'Hello',
+            file_extension => 'html'
+        );
+        is $x->file_extension, 'html', $spec;
+    };
 };
 
 run_tests();
