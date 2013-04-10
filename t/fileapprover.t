@@ -74,13 +74,37 @@ describe 'A FileApprover', sub {
     it 'Verifies matching Files', sub {
         my ($spec) = @_;
         my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
-        my $s = Test::Approvals::Reporters::FakeReporter->new();
 
         my $approved = $n->get_approved_file('.txt');
         $write_message_to->( 'Hello', $approved );
 
-        ok verify( $w, $n, $s ), $spec;
+        ok verify( $w, $n, $r ), $spec;
+        unlink $approved;
+    };
 
+    it 'Removes received file on match', sub {
+        my ($spec) = @_;
+        my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
+
+        my $approved = $n->get_approved_file('.txt');
+        $write_message_to->( 'Hello', $approved );
+
+        verify( $w, $n, $r );
+
+        ok !( -e $n->get_received_file('txt') ), $spec;
+        unlink $approved;
+    };
+
+    it 'Preserves approved file on match', sub {
+        my ($spec) = @_;
+        my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
+
+        my $approved = $n->get_approved_file('.txt');
+        $write_message_to->( 'Hello', $approved );
+
+        verify( $w, $n, $r );
+
+        ok -e $approved, $spec;
         unlink $approved;
     };
 };
