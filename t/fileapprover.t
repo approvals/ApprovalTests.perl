@@ -20,13 +20,24 @@ describe 'A FileApprover', sub {
         my $r = Test::Approvals::Reporters::FakeReporter->new();
 
         my $received = $n->get_received_file('.txt');
-        subtest 'verify' => sub {
-            plan tests => 1;
-            ok !verify( $w, $n, $r ), 'verify fails';
-        };
-        ok $r->was_called, $spec;
+        ok !verify( $w, $n, $r ), $spec;
         unlink $received;
+    };
+
+    it 'Verifies Files Have Equal Size', sub {
+        my ($spec) = @_;
+        my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
+        my $r = Test::Approvals::Reporters::FakeReporter->new();
+        my $approved = $n->get_approved_file('.txt');
+
+        open my $ah, '>', $approved;
+        $ah->print('Hello World');
+        $ah->close();
+
+        ok !verify( $w, $n, $r ), $spec;
+        unlink $approved;
+        unlink $n->get_received_file('.txt');
     };
 };
 
-run_tests(1);
+run_tests();
