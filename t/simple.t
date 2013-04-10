@@ -15,24 +15,23 @@ use Readonly;
 
 sub Namer {
     my %args = @_;
-    return Test::Approvals::Namers::DefaultNamer->new(
-        test_name => $args{test_name} );
+    return Test::Approvals::Namers::DefaultNamer->new( name => $args{name} );
 }
 
 sub test {
-    my ( $test_name, $test_method ) = @_;
+    my ( $name, $test_method ) = @_;
 
     my $working_dir = Bin();
 
-    $test_method->( Namer( test_name => $test_name ) );
+    $test_method->( Namer( name => $name ) );
     return;
 }
 
 sub verify {
-    my ( $test_name, $reporter, $test_method, ) = @_;
+    my ( $name, $reporter, $test_method, ) = @_;
     $reporter =
       $reporter || Test::Approvals::Reporters::IntroductionReporter->new();
-    my $namer  = Namer( test_name => $test_name );
+    my $namer  = Namer( name => $name );
     my $result = $test_method->($namer);
     my $writer = Test::Approvals::Writers::TextWriter->new(
         result         => $result,
@@ -40,7 +39,7 @@ sub verify {
     );
     my $test_more_reporter =
       Test::Approvals::Reporters::TestBuilderReporter->new(
-        test_name => $namer->test_name() );
+        name => $namer->name() );
     my $full_reporter =
       Test::Approvals::Reporters::AndReporter->new(
         reporters => [ $test_more_reporter, $reporter ] );
@@ -61,7 +60,7 @@ test 'Approve file does not exist', sub {
     my ($namer) = @_;
     my $reporter = Test::Approvals::Reporters::FakeReporter->new();
     verify_files( 'file_that_does_not_exist', 'a.txt', $reporter );
-    ok( $reporter->was_called(), $namer->test_name() );
+    ok( $reporter->was_called(), $namer->name() );
 };
 
 test 'Test Files Match', sub {
@@ -69,19 +68,14 @@ test 'Test Files Match', sub {
 
     my $writer = Test::Approvals::Writers::TextWriter->new( result => "a.txt" );
     my $approved = 't/a1.txt';
-    $writer->write($approved);
+    $writer->write_to($approved);
 
     my $received = 't/a.txt';
-    $writer->write($received);
+    $writer->write_to($received);
 
     my $reporter = Test::Approvals::Reporters::FakeReporter->new();
     verify_files( $approved, $received, $reporter );
-    ok( !$reporter->was_called(), $namer->test_name() );
-};
-
-test 'Namer finds directory', sub {
-    my ($namer) = @_;
-    ok( -e $namer->get_directory() . 'simple.t', $namer->test_name() );
+    ok( !$reporter->was_called(), $namer->name() );
 };
 
 test 'Namer knows approval file', sub {
@@ -89,25 +83,7 @@ test 'Namer knows approval file', sub {
     like(
         $namer->get_approved_file('txt'),
         qr/simple[.]t[.]namer_knows_approval_file[.]approved[.]txt\z/mxs,
-        $namer->test_name()
-    );
-};
-
-test 'Namer knows received file', sub {
-    my ($namer) = @_;
-    like(
-        $namer->get_received_file('txt'),
-        qr/simple[.]t[.]namer_knows_received_file[.]received[.]txt\z/mxs,
-        $namer->test_name()
-    );
-};
-test 'Namer provides dot for extension', sub {
-    my ($namer) = @_;
-    my $name = qr{namer_provides_dot_for_extension}misx;
-    like(
-        $namer->get_received_file('.txt'),
-        qr/simple[.]t[.]$name[.]received[.]txt\z/mxs,
-        $namer->test_name()
+        $namer->name()
     );
 };
 
