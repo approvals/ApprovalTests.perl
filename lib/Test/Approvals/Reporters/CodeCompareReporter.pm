@@ -23,3 +23,7 @@ package Test::Approvals::Reporters::CodeCompareReporter;
 __PACKAGE__->meta->make_immutable;
 
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::CodeCompareReporter - Report with CodeCompare

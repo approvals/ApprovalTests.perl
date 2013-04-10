@@ -23,3 +23,7 @@ package Test::Approvals::Reporters::AndReporter;
 }
 __PACKAGE__->meta->make_immutable;
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::AndReporter - Report with multiple reporters

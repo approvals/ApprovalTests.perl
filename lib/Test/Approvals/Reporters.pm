@@ -13,3 +13,7 @@ use Test::Approvals::Reporters::TortoiseDiffReporter;
 use Test::Approvals::Reporters::WinMergeReporter;
 
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters - 'use' all the available reporters

@@ -38,3 +38,7 @@ sub run_tests {
 }
 
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Specs - Tiny BDD Tools

@@ -50,3 +50,7 @@ package Test::Approvals;
 }
 
 1;
+__END__
+=head1 NAME
+
+Test::Approvals - Capture human intelligence in your tests

@@ -22,3 +22,7 @@ package Test::Approvals::Reporters::BeyondCompareReporter;
 }
 __PACKAGE__->meta->make_immutable;
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Reporters::BeyondCompareReporter - Report with BeyondCompare

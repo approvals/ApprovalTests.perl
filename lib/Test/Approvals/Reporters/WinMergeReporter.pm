@@ -23,3 +23,6 @@ package Test::Approvals::Reporters::WinMergeReporter;
 __PACKAGE__->meta->make_immutable;
 1;
 __END__
+=head1 NAME
+
+Test::Approvals::Reporters::WinMergeReporter - Report failure with WinMerge

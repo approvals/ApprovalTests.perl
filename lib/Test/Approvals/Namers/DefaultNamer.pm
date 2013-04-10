@@ -40,3 +40,7 @@ package Test::Approvals::Namers::DefaultNamer;
 }
 
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Namers::DefaultNamer - Default algorithm for generating names

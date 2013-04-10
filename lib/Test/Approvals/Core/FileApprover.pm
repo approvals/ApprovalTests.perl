@@ -90,3 +90,7 @@ package Test::Approvals::Core::FileApprover;
     }
 }
 1;
+__END__
+=head1 NAME
+
+Test::Approvals::Core::FileApprover - Verify two files are the same
