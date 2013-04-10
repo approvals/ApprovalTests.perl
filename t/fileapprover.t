@@ -69,7 +69,20 @@ describe 'A FileApprover', sub {
         ok $s->was_called, $spec;
         unlink $approved;
         unlink $n->get_received_file('txt');
-      }
+    };
+
+    it 'Verifies matching Files', sub {
+        my ($spec) = @_;
+        my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
+        my $s = Test::Approvals::Reporters::FakeReporter->new();
+
+        my $approved = $n->get_approved_file('.txt');
+        $write_message_to->( 'Hello', $approved );
+
+        ok verify( $w, $n, $s ), $spec;
+
+        unlink $approved;
+    };
 };
 
 run_tests();
