@@ -14,10 +14,18 @@ use Test::More;
 
 describe 'A FileApprover', sub {
     my $w = Test::Approvals::Writers::TextWriter->new( result => 'Hello' );
+    my $r = Test::Approvals::Reporters::FakeReporter->new();
+    my $write_message_to = sub {
+        my ( $message, $path ) = @_;
+        open my $ah, '>', $path;
+        $ah->print($message);
+        $ah->close();
+        return;
+    };
+
     it 'Verifies Approved File Exists', sub {
         my ($spec) = @_;
         my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
-        my $r = Test::Approvals::Reporters::FakeReporter->new();
 
         my $received = $n->get_received_file('.txt');
         ok !verify( $w, $n, $r ), $spec;
@@ -27,17 +35,41 @@ describe 'A FileApprover', sub {
     it 'Verifies Files Have Equal Size', sub {
         my ($spec) = @_;
         my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
-        my $r = Test::Approvals::Reporters::FakeReporter->new();
-        my $approved = $n->get_approved_file('.txt');
 
-        open my $ah, '>', $approved;
-        $ah->print('Hello World');
-        $ah->close();
+        my $approved = $n->get_approved_file('.txt');
+        $write_message_to->( 'Hello World', $approved );
 
         ok !verify( $w, $n, $r ), $spec;
         unlink $approved;
         unlink $n->get_received_file('.txt');
     };
+
+    it 'Verifies Every Byte Is Equal', sub {
+        my ($spec) = @_;
+        my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
+
+        my $approved = $n->get_approved_file('.txt');
+        $write_message_to->( 'Helol', $approved );
+
+        ok !verify( $w, $n, $r ), $spec;
+        unlink $approved;
+        unlink $n->get_received_file('txt');
+    };
+
+    it 'Launches Reporter on Failure', sub {
+        my ($spec) = @_;
+        my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
+        my $s = Test::Approvals::Reporters::FakeReporter->new();
+
+        my $approved = $n->get_approved_file('.txt');
+        $write_message_to->( 'Helol', $approved );
+
+        verify( $w, $n, $s );
+
+        ok $s->was_called, $spec;
+        unlink $approved;
+        unlink $n->get_received_file('txt');
+      }
 };
 
 run_tests();
