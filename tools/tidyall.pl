@@ -5,10 +5,15 @@ use warnings FATAL => 'all';
 use autodie;
 
 use File::Next;
+use File::Spec;
+use File::stat;
+use FindBin::Real qw(Bin Script);
 use Getopt::Euclid;
+use Storable;
 
 my $print_info = $ARGV{-v};
 my $input      = $ARGV{-i};
+my $cache      = File::Spec->catfile( Bin(), '_mtimes' );
 
 if ($print_info) {
     print "Looking for Perl sources in $input\n";
@@ -23,13 +28,22 @@ my $next_file = File::Next::files(
     $input
 );
 
+my %mtimes = -e $cache ? %{ retrieve($cache) } : ();
+
 while ( defined( my $file = $next_file->() ) ) {
+    my $mtime = stat($file)->mtime;
+    if ( $mtime == $mtimes{$file} ) {
+        next;
+    }
+
     my $perltidy = "perltidy $ARGV{-P} $file";
     if ($print_info) {
         print "$perltidy\n";
     }
 
-    system $perltidy ;
+    system $perltidy;
+    $mtimes{$file} = stat($file)->mtime;
+    store \%mtimes, $cache;
 }
 
 __END__

@@ -19,7 +19,7 @@ package Test::Approvals::Namers::DefaultNamer;
         my $test = $self->name();
         my $dir  = $self->directory;
         $extension =~ s{^[.]}{}mixs;
-        $test =~ s{[.]$}{}mixs;
+        $test      =~ s{[.]$}{}mixs;
 
         my $full_filename = "$file.$test.$type.$extension";
         $full_filename =~ s/\s/_/gmisx;
