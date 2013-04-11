@@ -27,3 +27,14 @@ __END__
 =head1 NAME
 
 Test::Approvals::Reporters::CodeCompareReporter - Report with CodeCompare
+
+=head1 METHODS
+
+=head2 argv
+
+Returns the argument portion expected by the reporter when invoked from the 
+command line.
+
+=head2 exe
+
+Returns the path to the reporter executable.

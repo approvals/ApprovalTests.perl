@@ -5,8 +5,8 @@ use autodie;
 use version; our $VERSION = qv(0.0.1);
 
 use Test::Approvals::Specs qw(describe it run_tests);
-use Test::Approvals::Reporters::WinMergeReporter;
 use Test::More;
+use Test::Approvals::Reporters::WinMergeReporter;
 
 describe 'A WinMergeReporter', sub {
     my $r          = Test::Approvals::Reporters::WinMergeReporter->new();

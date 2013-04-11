@@ -27,3 +27,18 @@ __END__
 =head1 NAME
 
 Test::Approvals::Reporters::AndReporter - Report with multiple reporters
+
+=head1 METHODS
+
+=head2 report
+
+    my $left  = Test::Approvals::Reporters::FakeReporter->new();
+    my $right = Test::Approvals::Reporters::FakeReporter->new();
+    my $and   = Test::Approvals::Reporters::AndReporter->new(
+        reporters => [ $left, $right ] 
+    );
+
+    $and->report( 'r.txt', 'a.txt' );
+
+Each reporter passed to the constructor in the reporters argument will be 
+called by report with the arguments provided to report.

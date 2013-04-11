@@ -43,8 +43,8 @@ sub verify {
     my $full_reporter =
       Test::Approvals::Reporters::AndReporter->new(
         reporters => [ $test_more_reporter, $reporter ] );
-    verify_parts( $writer, $namer, $full_reporter );
-    return;
+    return Test::Approvals::Core::FileApprover::verify( $writer, $namer,
+        $full_reporter );
 }
 
 {
@@ -55,13 +55,6 @@ sub verify {
     };
 
 }
-
-test 'Approve file does not exist', sub {
-    my ($namer) = @_;
-    my $reporter = Test::Approvals::Reporters::FakeReporter->new();
-    verify_files( 'file_that_does_not_exist', 'a.txt', $reporter );
-    ok( $reporter->was_called(), $namer->name() );
-};
 
 test 'Test Files Match', sub {
     my ($namer) = @_;

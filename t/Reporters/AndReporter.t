@@ -1,19 +1,25 @@
 #! perl
+use strict;
+use warnings FATAL => qw(all);
+use autodie;
+use version; our $VERSION = qv(0.0.1);
 
+use Test::Approvals::Specs qw(describe it run_tests);
+use Test::More;
 use Test::Approvals::Reporters;
-use Test::More::Behaviour;
 
-plan tests => 2;
+describe 'An AndReporter' => sub {
+    my $left  = Test::Approvals::Reporters::FakeReporter->new();
+    my $right = Test::Approvals::Reporters::FakeReporter->new();
+    my $and =
+      Test::Approvals::Reporters::AndReporter->new(
+        reporters => [ $left, $right ] );
+    it 'Invokes multiple reporters' => sub {
+        my ($spec) = @_;
 
-describe 'AndReporter' => sub {
-    it 'invokes two reporters' => sub {
-        my $left  = Test::Approvals::Reporters::FakeReporter->new();
-        my $right = Test::Approvals::Reporters::FakeReporter->new();
-        my $and =
-          Test::Approvals::Reporters::AndReporter->new(
-            reporters => [ $left, $right ] );
         $and->report( 'foo', 'bar' );
-        ok $left->was_called();
-        ok $right->was_called();
-      }
+        ok $left->was_called && $right->was_called, $spec;
+    };
 };
+
+run_tests();

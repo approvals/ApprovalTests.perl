@@ -19,74 +19,44 @@ package Test::Approvals::Core::FileApprover;
 
     sub verify {
         my ( $writer, $namer, $reporter ) = @_;
-        return verify_parts( $writer, $namer, $reporter );
-    }
 
-    sub verify_parts {
-        my ( $writer, $namer, $reporter ) = @_;
-        my $received =
-          $writer->write_to(
-            $namer->get_received_file( $writer->file_extension() ) );
-        my $approved = $namer->get_approved_file( $writer->file_extension() );
-        return verify_files( $approved, $received, $reporter );
-    }
+        my $ext = $writer->file_extension;
 
-    sub verify_files {
-        my ( $approved_file, $received_file, $reporter ) = @_;
+        my $approved = $namer->get_approved_file($ext);
+        my $received = $namer->get_received_file($ext);
 
-        my $reporter_delegate =
-          _get_reporter_delegate( $approved_file, $received_file, $reporter );
+        $writer->write_to($received);
 
-        my $approval_exists = _get_comparer(
-            'Approved file does not exist:',
-            sub { ( -e $approved_file ) },
-            $reporter_delegate
-        );
-
-        my $same_sizes = _get_comparer(
-            'File sizes do not match:',
-            sub { ( -s $approved_file ) == ( -s $received_file ) },
-            $reporter_delegate
-        );
-
-        my $same_content = _get_comparer(
-            'Files do not match:',
-            sub { compare( $approved_file, $received_file ) == 0 },
-            $reporter_delegate
-        );
-
-        my $ok = $approval_exists->() && $same_sizes->() && $same_content->();
-        if ($ok) {
-            unlink $received_file;
+        my $e = verify_files( $received, $approved );
+        my $ok = !defined $e;
+        if ( !$ok ) {
+            my $message = "\n$e\nAPPROVED: $approved\nRECEIVED: $received\n";
+            $TEST->diag($message);
+            $reporter->report( $approved, $received );
         }
+        else {
+            unlink $received;
+        }
+
         return $ok;
     }
 
-    sub report {
-        my ( $message, $approved_file, $received_file, $reporter ) = @_;
-        $TEST->diag(
-            "\n$message\nAPPROVED: $approved_file\nRECEIVED: $received_file\n");
-        $reporter->report( $approved_file, $received_file );
+    sub verify_files {
+        my ( $received_file, $approved_file ) = @_;
+
+        if ( !-e $approved_file ) {
+            return 'Approved file does not exist:';
+        }
+
+        if ( ( -s $approved_file ) != ( -s $received_file ) ) {
+            return 'File sizes do not match:';
+        }
+
+        if ( compare( $approved_file, $received_file ) != 0 ) {
+            return 'Files do not match:';
+        }
+
         return;
-    }
-
-    sub _get_comparer {
-        my ( $message, $predicate, $reporter_delegate ) = @_;
-        return sub {
-            my $ok = $predicate->();
-            if ( !$ok ) {
-                $reporter_delegate->($message);
-            }
-            return $ok;
-          }
-    }
-
-    sub _get_reporter_delegate {
-        my ( $approved_file, $received_file, $reporter ) = @_;
-        return sub {
-            my ($message) = @_;
-            report( $message, $approved_file, $received_file, $reporter );
-          }
     }
 }
 1;
@@ -94,3 +64,17 @@ __END__
 =head1 NAME
 
 Test::Approvals::Core::FileApprover - Verify two files are the same
+
+=head1 METHODS
+
+=head2 verify
+
+    my $w = Test::Approvals::Writers::TextWriter->new( result => 'Hello' );
+    my $r = Test::Approvals::Reporters::FakeReporter->new();
+    my $n = Test::Approvals::Namers::DefaultNamer->new( name => 'Hello Test' );
+
+    ok verify( $w, $n, $r ), $n->name;
+
+Low level method to verify that the result data matches the approved data 
+(stored in a file).  Returns a value indicating whether the data matches and
+invokes the reporter when needed.

@@ -35,3 +35,22 @@ __END__
 =head1 NAME
 
 Test::Approvals::Writers::TextWriter - Writes text to files
+
+=head1 METHODS
+
+=head2 print_to
+
+Write the result to an open handle.
+
+    my $w = Test::Approvals::Writers::TextWriter->new( result => 'Hello' );
+    my $out_buf;
+    open my $out, '>', \$out_buf;
+    $w->print_to($out);
+    close $out;
+
+=head2 write_to
+
+Write the result to a file at the specified path.
+
+    my $w = Test::Approvals::Writers::TextWriter->new( result => 'Hello' );
+    $w->write_to('out.txt');
