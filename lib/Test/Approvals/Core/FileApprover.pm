@@ -30,9 +30,9 @@ package Test::Approvals::Core::FileApprover;
         my $e = verify_files( $received, $approved );
         my $ok = !defined $e;
         if ( !$ok ) {
-            my $message = "\n$e\nAPPROVED: $approved\nRECEIVED: $received\n";
+            my $message = "\n$e:\nAPPROVED: $approved\nRECEIVED: $received\n";
             $TEST->diag($message);
-            $reporter->report( $approved, $received );
+            $reporter->report( $received, $approved );
         }
         else {
             unlink $received;
@@ -45,15 +45,15 @@ package Test::Approvals::Core::FileApprover;
         my ( $received_file, $approved_file ) = @_;
 
         if ( !-e $approved_file ) {
-            return 'Approved file does not exist:';
+            return 'Approved file does not exist';
         }
 
         if ( ( -s $approved_file ) != ( -s $received_file ) ) {
-            return 'File sizes do not match:';
+            return 'File sizes do not match';
         }
 
         if ( compare( $approved_file, $received_file ) != 0 ) {
-            return 'Files do not match:';
+            return 'Files do not match';
         }
 
         return;
@@ -65,7 +65,7 @@ __END__
 
 Test::Approvals::Core::FileApprover - Verify two files are the same
 
-=head1 METHODS
+=head1 SUBROUTINES
 
 =head2 verify
 
@@ -78,3 +78,16 @@ Test::Approvals::Core::FileApprover - Verify two files are the same
 Low level method to verify that the result data matches the approved data 
 (stored in a file).  Returns a value indicating whether the data matches and
 invokes the reporter when needed.
+
+=head2 verify_files
+
+    my $failure = verify_files('r.txt', 'a.txt');
+    if(defined $failure) {
+        print "Verification failed because: $failure";
+    }
+    else {
+        pring "Verification success!";
+    }
+
+Compare two files and return a message if they are not the same.  When they
+are the same, return null.

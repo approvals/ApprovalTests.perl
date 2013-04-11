@@ -54,3 +54,49 @@ __END__
 =head1 NAME
 
 Test::Approvals - Capture human intelligence in your tests
+
+=head1 SUBROUTINES
+
+=head2 namer
+
+    my $namer = namer();
+
+Gets the currently configured Test::Approvals::Namers:: instance.
+
+=head2 reporter
+
+    my $reporter = reporter();
+
+Gets the currently configured Test::Approvals::Reporters:: instance.
+
+=head2 use_name
+
+    my $namer = use_name('My Test Name');
+
+Construct a namer for the specified name, configure it as the current instance, 
+and return the instance.
+
+=head2 use_reporter
+
+    my $reporter = use_reporter('Test::Approvals::Reporters::DiffReporter');
+
+Construct a reporter of the specified type, configure it as the current 
+instance, and return the instance.
+
+=head2 verify
+
+    my $ok = verify('Hello');
+    ok $ok, 'My Test';
+
+Construct a writer for the specified data and use it (along with the current 
+namer and reporter instances) to verify against the approved data.  Returns a
+value indicating whether the data matched.  The reporter is launched when 
+appropriate.
+
+You can pass anything to verify that Perl can easily stringify in a scalar 
+context.  So, passing an array, a hash, or raw reference to verify is not going 
+to produce useful results.  In these cases, take advantage of Data::Dumper.
+
+    use Data::Dumper;
+    my %person = ( First => 'Fred', Last => 'Flintrock' );
+    ok verify(Dumper( \%person )), 'Fred test';
