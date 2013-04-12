@@ -64,4 +64,12 @@ describe 'A KDiff Reporter' => sub {
     };
 };
 
+describe 'A P4Merge Reporter' => sub {
+    it 'Reports with P4Merge' => sub {
+        use_name(shift);
+        ok test_reporter 'Test::Approvals::Reporters::P4MergeReporter',
+          namer()->name();
+    };
+};
+
 run_tests();
