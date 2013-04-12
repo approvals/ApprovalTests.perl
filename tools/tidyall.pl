@@ -32,7 +32,7 @@ my %mtimes = -e $cache ? %{ retrieve($cache) } : ();
 
 while ( defined( my $file = $next_file->() ) ) {
     my $mtime = stat($file)->mtime;
-    if ( $mtime == $mtimes{$file} ) {
+    if ( $mtime ~~ $mtimes{$file} ) {
         next;
     }
 

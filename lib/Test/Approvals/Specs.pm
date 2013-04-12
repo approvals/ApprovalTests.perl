@@ -24,9 +24,10 @@ sub describe {
 }
 
 sub it {
-    my $name = shift;
-    my $spec = shift;
-    push @specs, sub { $spec->("$context $name") };
+    my $name            = shift;
+    my $spec            = shift;
+    my $current_context = $context;
+    push @specs, sub { $spec->("$current_context $name") };
     return;
 }
 
