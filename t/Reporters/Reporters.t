@@ -48,4 +48,12 @@ describe 'A File Launcher Reporter' => sub {
     };
 };
 
+describe 'A BeyondCompare Reporter' => sub {
+    it 'Reports with BeyondCompare' => sub {
+        use_name(shift);
+        ok test_reporter 'Test::Approvals::Reporters::BeyondCompareReporter',
+          namer()->name();
+    };
+};
+
 run_tests();
