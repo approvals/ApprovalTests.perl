@@ -56,4 +56,12 @@ describe 'A BeyondCompare Reporter' => sub {
     };
 };
 
+describe 'A KDiff Reporter' => sub {
+    it 'Reports with KDiff' => sub {
+        use_name(shift);
+        ok test_reporter 'Test::Approvals::Reporters::KDiffReporter',
+          namer()->name();
+    };
+};
+
 run_tests();
