@@ -40,4 +40,12 @@ describe 'A WinMerge Reporter' => sub {
     };
 };
 
+describe 'A File Launcher Reporter' => sub {
+    it 'uses the shell to locate a reporter' => sub {
+        use_name(shift);
+        ok test_reporter 'Test::Approvals::Reporters::FileLauncherReporter',
+          namer()->name();
+    };
+};
+
 run_tests();
