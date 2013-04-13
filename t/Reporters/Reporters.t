@@ -14,7 +14,7 @@ use_reporter('Test::Approvals::Reporters::DiffReporter');
 sub test_reporter {
     my $class    = shift;
     my $reporter = $class->new();
-    my $cmd      = $reporter->exe . " " . $reporter->argv;
+    my $cmd      = $reporter->exe . q{ } . $reporter->argv;
 
     my $ok = verify($cmd);
     if ( !$ok ) {

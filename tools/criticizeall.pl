@@ -1,14 +1,18 @@
 #! perl
 
 use Modern::Perl '2012';
+use strict;
 use warnings FATAL => 'all';
 use autodie;
+use version; our $VERSION = qv(0.0.1);
 
+use Carp;
 use File::Next;
 use File::Spec;
 use File::stat;
 use FindBin::Real qw(Bin Script);
 use Getopt::Euclid;
+use Readonly;
 use Storable;
 
 my $print_info = $ARGV{-v};
@@ -16,15 +20,17 @@ my $input      = $ARGV{-i};
 my $force      = $ARGV{'-f'};
 my $cache      = File::Spec->catfile( Bin(), '_cmtimes' );
 
+Readonly my $SAYERR => 'Could not write to standard output.';
+
 if ($print_info) {
-    print "Looking for Perl sources in $input\n";
-    print "perlcritic options: $ARGV{-C}\n";
+    say "Looking for Perl sources in $input" or croak $SAYERR;
+    say "perlcritic options: $ARGV{-C}"      or croak $SAYERR;
 }
 
 my $next_file = File::Next::files(
     {
-        descend_filter => sub { $_ ne ".git" && $_ ne 'blib' },
-        file_filter => sub { $_ =~ /[.]pl$|[.]pm$|[.]t$/ }
+        descend_filter => sub { $_ ne '.git' && $_ ne 'blib' },
+        file_filter => sub { $_ =~ /[.](?:p[lm]|t)$/smx }
     },
     $input
 );
@@ -33,13 +39,13 @@ my %mtimes = -e $cache ? %{ retrieve($cache) } : ();
 
 while ( defined( my $file = $next_file->() ) ) {
     my $mtime = stat($file)->mtime;
-    if ( !$force and $mtime ~~ $mtimes{$file} ) {
+    if ( ( !$force ) and $mtime ~~ $mtimes{$file} ) {
         next;
     }
 
     my $perlcritic = "perlcritic $ARGV{-C} $file";
     if ($print_info) {
-        print "$perlcritic\n";
+        say $perlcritic or croak $SAYERR;
     }
 
     system $perlcritic;
@@ -47,19 +53,36 @@ while ( defined( my $file = $next_file->() ) ) {
     store \%mtimes, $cache;
 }
 
+exit 0;
+
 __END__
 
-=head 1 NAME
+=head1 NAME
 
 criticizeall - Recursively find Perl sources and run perlcritic on them all
 
-=head 1 VERSION
+=head1 VERSION
 
 This documentation referes to criticizeall version 0.0.1
 
-=head 1 USAGE
+=head1 USAGE
 
    criticizeall -in .\directory [options]
+
+=head1 DESCRIPTION
+
+'criticizeall' looks for perl sources in the input directory and its children 
+and runs the perlcritic lint tool on each source file it finds.  The first time
+criticizeall executes, it will store the modification times of the source files 
+and on the next run, only modified files will be checked.  By default 
+criticizeall searches the current directory if no directory is speicfied, and 
+uses perlcritic's '-1' option to run with the maximum number of rules enabled.
+You can use the '-f' option to force criticizeall to check all files, even those
+which have not been modified.
+
+=head1 REQUIRED ARGUMENTS
+
+None.
 
 =head1 OPTIONS
 
@@ -102,17 +125,31 @@ Print the usual program information
 
 =back
 
+=head1 CONFIGURATION
+
+None.
+
+=head1 DIAGNOSTICS
+
+None at this time.
+
+=head1 EXIT STATUS
+
+Zero on success.  No others defined at this time.
+
 =head1 DEPENDENCIES
 
 =over
 
     autodie
+    Carp
     File::Next
     File::Spec
     File::stat
     FindBin::Real
     Getopt::Euclid
     Modern::Perl 2012
+    Readonly
     Storable
 
 =back

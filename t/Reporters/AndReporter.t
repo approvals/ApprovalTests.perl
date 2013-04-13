@@ -9,16 +9,16 @@ use Test::More;
 use Test::Approvals::Reporters;
 
 describe 'An AndReporter' => sub {
-    my $left  = Test::Approvals::Reporters::FakeReporter->new();
-    my $right = Test::Approvals::Reporters::FakeReporter->new();
-    my $and =
-      Test::Approvals::Reporters::AndReporter->new(
-        reporters => [ $left, $right ] );
+    my $r = [
+        Test::Approvals::Reporters::FakeReporter->new(),
+        Test::Approvals::Reporters::FakeReporter->new(),
+    ];
+    my $and = Test::Approvals::Reporters::AndReporter->new( reporters => $r );
     it 'Invokes multiple reporters' => sub {
         my ($spec) = @_;
 
         $and->report( 'foo', 'bar' );
-        ok $left->was_called && $right->was_called, $spec;
+        ok $r->[0]->was_called && $r->[1]->was_called, $spec;
     };
 };
 
