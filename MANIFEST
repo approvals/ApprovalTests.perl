@@ -52,3 +52,5 @@ t/Reporters/reporters.t.a_tortoisemerge_reporter_reports_with_tortoisemerge.appr
 t/Reporters/reporters.t.a_winmerge_reporter_reports_with_winmerge.approved.txt
 tools/tidyall.pl
 Makefile.PL
+META.yml
+META.json

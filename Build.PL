@@ -5,7 +5,7 @@ use Module::Build;
 
 my $builder = Module::Build->new(
     module_name         => 'Test::Approvals',
-    license             => 'Apache_2_0',
+    license             => 'apache',
     dist_author         => q{Jim Counts <jamesrcounts@outlook.com>},
     dist_version_from   => 'lib/Test/Approvals.pm',
     release_status      => 'stable',

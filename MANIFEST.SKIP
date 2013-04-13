@@ -1,5 +1,7 @@
 ^[.]git
 _mtimes
 [.]bak$
-MANIFEST.SKIP^MYMETA\.yml$
+MANIFEST.SKIP
+^MYMETA\.yml$
 ^MYMETA\.json$
+Test-Approvals-.*[.]tar[.]gz
