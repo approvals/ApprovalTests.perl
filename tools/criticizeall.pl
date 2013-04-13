@@ -151,6 +151,7 @@ Zero on success.  No others defined at this time.
     Modern::Perl 2012
     Readonly
     Storable
+    version
 
 =back
 

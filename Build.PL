@@ -26,6 +26,7 @@ my $builder = Module::Build->new(
         'FindBin::Real'  => 0,
         'Getopt::Euclid' => 0,
         'Modern::Perl'   => 0,
+        'Moose'          => 0,
         'Readonly'       => 0,
         'Storable'       => 0,
         'Test::Builder'  => 0,
