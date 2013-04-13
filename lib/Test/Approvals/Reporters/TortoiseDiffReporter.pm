@@ -2,26 +2,17 @@
 package Test::Approvals::Reporters::TortoiseDiffReporter;
 {
     use Moose;
-    use File::Touch;
-    use Win32::Process;
-    use FindBin::Real qw(Bin);
 
+    with 'Test::Approvals::Reporters::Win32Reporter';
     with 'Test::Approvals::Reporters::Reporter';
+    with 'Test::Approvals::Reporters::EnvironmentAwareReporter';
 
-    sub report {
-        my ( $self, $approved, $received ) = @_;
+    sub exe {
+        return locate_exe( 'TortoiseSVN\bin', 'tortoisemerge.exe' );
+    }
 
-        $approved =~ s{/}{\\\\}gmisx;
-        $received =~ s{/}{\\\\}gmisx;
-
-        my $bin = "C:\\Program Files\\TortoiseSVN\\bin\\";
-        my $exe = "tortoisemerge.exe";
-        touch($approved);
-
-        my $process;
-        Win32::Process::Create( $process, "$bin$exe",
-            "\"$bin$exe\" \"$received\" \"$approved\"",
-            0, DETACHED_PROCESS, Bin() );
+    sub argv {
+        return default_argv();
     }
 }
 1;
@@ -31,11 +22,13 @@ __END__
 Test::Approvals::Reporters::TortoiseDiffReporter - Report failures with 
 TortoiseMerge
 
-=head2 report
+=head2 METHODS
 
-    my $received = 'test.received.txt';
-    my $approved = 'test.approved.txt';
-    $reporter->report($received, $approved);
+=head2 argv
 
-Normalize the paths to received and approved files, then try to launch the diff
-utility.    
+Returns the argument portion expected by the reporter when invoked from the 
+command line.
+
+=head2 exe
+
+Returns the path to the reporter executable.

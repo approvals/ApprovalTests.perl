@@ -42,7 +42,7 @@ package Test::Approvals::Reporters::Win32Reporter;
         my ( $relative_path, $exe ) = @_;
 
         my $find_in_path = sub {
-            my $location = `where $exe`;
+            my $location = `where $exe 2> NUL`;
             if ( defined $location ) {
                 chomp $location;
                 return $location;

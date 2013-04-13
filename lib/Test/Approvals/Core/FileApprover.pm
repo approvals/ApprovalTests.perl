@@ -31,7 +31,7 @@ package Test::Approvals::Core::FileApprover;
         my $ok = !defined $e;
         if ( !$ok ) {
             my $message = "\n$e:\nAPPROVED: $approved\nRECEIVED: $received\n";
-            $TEST->diag($message);
+            $TEST->note($message);
             $reporter->report( $received, $approved );
         }
         else {

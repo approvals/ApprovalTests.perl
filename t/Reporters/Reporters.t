@@ -72,4 +72,12 @@ describe 'A P4Merge Reporter' => sub {
     };
 };
 
+describe 'A TortoiseMerge Reporter' => sub {
+    it 'Reports with TortoiseMerge' => sub {
+        use_name(shift);
+        ok test_reporter 'Test::Approvals::Reporters::TortoiseDiffReporter',
+          namer()->name();
+    };
+};
+
 run_tests();

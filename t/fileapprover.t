@@ -28,6 +28,7 @@ describe 'A FileApprover', sub {
         my $n = Test::Approvals::Namers::DefaultNamer->new( name => $spec );
 
         my $received = $n->get_received_file('.txt');
+
         ok !verify( $w, $n, $r ), $spec;
         unlink $received;
     };

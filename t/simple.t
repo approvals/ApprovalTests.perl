@@ -37,12 +37,8 @@ sub verify {
         result         => $result,
         file_extension => '.txt'
     );
-    my $test_more_reporter =
-      Test::Approvals::Reporters::TestBuilderReporter->new(
-        name => $namer->name() );
     my $full_reporter =
-      Test::Approvals::Reporters::AndReporter->new(
-        reporters => [ $test_more_reporter, $reporter ] );
+      Test::Approvals::Reporters::AndReporter->new( reporters => [$reporter] );
     return Test::Approvals::Core::FileApprover::verify( $writer, $namer,
         $full_reporter );
 }
