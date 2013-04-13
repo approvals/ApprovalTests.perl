@@ -19,4 +19,5 @@ pod2htm*.tmp
 pm_to_blib
 Test-Approvals-*
 Test-Approvals-*.tar.gz
+tools/_cmtimes
 tools/_mtimes
