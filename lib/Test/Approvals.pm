@@ -10,14 +10,18 @@ package Test::Approvals;
     use Test::Approvals::Namers::DefaultNamer;
     use Test::Approvals::Core::FileApprover qw();
     use Test::Approvals::Writers::TextWriter;
+    use Test::Builder;
 
     require Exporter;
     use base qw(Exporter);
 
-    our @EXPORT_OK = qw(use_reporter verify reporter use_name namer);
+    our @EXPORT_OK = qw(use_reporter use_reporter_instance verify verify_ok
+      reporter use_name namer);
 
+    my $Test = Test::Builder->new();
     my $namer_instance;
-    my $reporter_instance;
+    my $reporter_instance =
+      Test::Approvals::Reporters::IntroductionReporter->new();
 
     sub namer {
         return $namer_instance;
@@ -34,10 +38,14 @@ package Test::Approvals;
         return $namer_instance;
     }
 
+    sub use_reporter_instance {
+        $reporter_instance = shift;
+        return $reporter_instance;
+    }
+
     sub use_reporter {
         my ($reporter_type) = @_;
-        $reporter_instance = $reporter_type->new();
-        return $reporter_instance;
+        return use_reporter_instance $reporter_type->new();
     }
 
     sub verify {
@@ -46,6 +54,14 @@ package Test::Approvals;
 
         return Test::Approvals::Core::FileApprover::verify( $w, namer(),
             reporter() );
+    }
+
+    sub verify_ok {
+        my ( $results, $name ) = @_;
+        if ( defined $name ) {
+            use_name($name);
+        }
+        $Test->ok( verify $results, $namer_instance->name );
     }
 }
 
@@ -83,6 +99,14 @@ and return the instance.
 Construct a reporter of the specified type, configure it as the current 
 instance, and return the instance.
 
+=head2 use_reporter_instance
+
+    my $reporter = Test::Approvals::Reporters::DiffReporter->new();
+    my $ref = use_reporter_instance($reporter);
+
+Like 'use_reporter', but use the provided instance instead of constructing a 
+new instance.
+
 =head2 verify
 
     my $ok = verify('Hello');
@@ -100,3 +124,14 @@ to produce useful results.  In these cases, take advantage of Data::Dumper.
     use Data::Dumper;
     my %person = ( First => 'Fred', Last => 'Flintrock' );
     ok verify(Dumper( \%person )), 'Fred test';
+
+=head2 verify_ok
+
+    use_name('Hello Test');
+    verify_ok('Hello');
+
+Like 'verify', but also automatically call 'ok' with the test name provided by
+the current namer instance.  Or you can pass the name explicitly for a more
+traditional Test::More experience:
+
+    verify_ok 'Hello', 'Hello Test';

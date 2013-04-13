@@ -26,7 +26,6 @@ lib/Test/Approvals/Reporters.pm
 MANIFEST			This list of files
 README
 t/00-load.t
-t/a.txt
 t/a1.txt
 t/approvals.t
 t/b.txt
@@ -36,8 +35,6 @@ t/manifest.t
 t/namer.t
 t/pod-coverage.t
 t/pod.t
-t/simple.t
-t/simple.t.verify_hello_world.approved.txt
 t/writer.t
 t/Reporters/AndReporter.t
 t/Reporters/r.txt
