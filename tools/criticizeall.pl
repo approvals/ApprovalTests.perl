@@ -1,12 +1,9 @@
 #! perl
 
 use Modern::Perl '2012';
-use strict;
 use warnings FATAL => 'all';
 use autodie;
-use version; our $VERSION = qv(0.0.1);
 
-use Carp;
 use File::Next;
 use File::Spec;
 use File::stat;
@@ -16,20 +13,18 @@ use Storable;
 
 my $print_info = $ARGV{-v};
 my $input      = $ARGV{-i};
-my $cache      = File::Spec->catfile( Bin(), '_mtimes' );
+my $force      = $ARGV{'-f'};
+my $cache      = File::Spec->catfile( Bin(), '_cmtimes' );
 
 if ($print_info) {
-    say "Looking for Perl sources in $input"
-      or croak 'Failed to write to standard output';
-    say "perltidy options: $ARGV{-P}"
-      or croak 'Failed to write to standard output';
+    print "Looking for Perl sources in $input\n";
+    print "perlcritic options: $ARGV{-C}\n";
 }
 
 my $next_file = File::Next::files(
     {
-        descend_filter => sub { $_ ne '.git' && $_ ne 'blib' },
-        file_filter =>
-          sub { $_ !~ /tidyall.pl/sxm && $_ =~ /[.](?:pl|pm|t)$/mixs }
+        descend_filter => sub { $_ ne ".git" && $_ ne 'blib' },
+        file_filter => sub { $_ =~ /[.]pl$|[.]pm$|[.]t$/ }
     },
     $input
 );
@@ -38,48 +33,33 @@ my %mtimes = -e $cache ? %{ retrieve($cache) } : ();
 
 while ( defined( my $file = $next_file->() ) ) {
     my $mtime = stat($file)->mtime;
-    if ( $mtime ~~ $mtimes{$file} ) {
+    if ( !$force and $mtime ~~ $mtimes{$file} ) {
         next;
     }
 
-    my $perltidy = "perltidy $ARGV{-P} $file";
+    my $perlcritic = "perlcritic $ARGV{-C} $file";
     if ($print_info) {
-        say $perltidy or croak 'Failed to write to standard output';
+        print "$perlcritic\n";
     }
 
-    system $perltidy;
+    system $perlcritic;
     $mtimes{$file} = stat($file)->mtime;
     store \%mtimes, $cache;
 }
 
-exit 0;
-
 __END__
 
-=head1 NAME
+=head 1 NAME
 
-tidyall - Recursively find all Perl sources and run perltidy on them all
+criticizeall - Recursively find Perl sources and run perlcritic on them all
 
-=head1 VERSION
+=head 1 VERSION
 
-This documentation referes to tidyall version 0.0.1
+This documentation referes to criticizeall version 0.0.1
 
-=head1 USAGE
+=head 1 USAGE
 
-   tidyall -in .\directory [options]
-
-=head1 DESCRIPTION
-
-'tidyall' looks for perl sources in the input directory and its children and 
-runs the perltidy pretty printer on each source file it finds.  The first time
-tidyall executes, it will store the modification times of the source files and
-on the next run, only modified files will be tidied.  By default tidyall 
-searches the current directory if no directory is speicfied, and uses perltidy's
-'-b' option to modify the source files in place (and create a backup).
-
-=head1 REQUIRED ARGUMENTS
-
-None.
+   criticizeall -in .\directory [options]
 
 =head1 OPTIONS
 
@@ -93,12 +73,16 @@ Specify input directory
 		directory.type: readable
 		directory.default: '.'
 
-=item -P [=] <opts>
+=item -C [=] <opts>
 
 =for Euclid
-		opts.default: '-b'
+		opts.default: '-1'
 
-perltidy options
+criticizeall options
+
+=item -f
+
+Force criticism, even if the file appears unmodified.
 
 =item -v
 
@@ -118,24 +102,11 @@ Print the usual program information
 
 =back
 
-=head1 DIAGNOSTICS
-
-None at this time.
-
-=head1 EXIT STATUS
-
-Zero on success.  No others defined at this time.
-
-=head1 CONFIGURATION
-
-None.
-
 =head1 DEPENDENCIES
 
 =over
 
     autodie
-    Carp
     File::Next
     File::Spec
     File::stat
