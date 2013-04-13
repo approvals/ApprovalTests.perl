@@ -10,12 +10,11 @@ use English qw(-no_match_vars);
 # Ensure a recent version of Test::Pod::Coverage
 Readonly my $MIN_TPC => 1.08;
 
-my $skip = 0;
-## no critic (ProhibitStringyEval)
-eval "use Test::Pod::Coverage $MIN_TPC" or $skip = 1;
+## no critic (ProhibitStringyEval RequireCheckingReturnValueOfEval)
+eval "use Test::Pod::Coverage $MIN_TPC";
 ## use critic
 
-if ( $EVAL_ERROR or $skip ) {
+if ($EVAL_ERROR) {
     plan skip_all =>
       "Test::Pod::Coverage $MIN_TPC required for testing POD coverage";
 }
@@ -24,12 +23,11 @@ if ( $EVAL_ERROR or $skip ) {
 # but older versions don't recognize some common documentation styles
 Readonly my $MIC_PC => 0.18;
 
-$skip = 0;
-## no critic (ProhibitStringyEval)
-eval "use Pod::Coverage $MIC_PC" or $skip = 1;
+## no critic (ProhibitStringyEval RequireCheckingReturnValueOfEval)
+eval "use Pod::Coverage $MIC_PC";
 ## use critic
 
-if ( $EVAL_ERROR or $skip ) {
+if ($EVAL_ERROR) {
     plan skip_all => "Pod::Coverage $MIC_PC required for testing POD coverage";
 }
 

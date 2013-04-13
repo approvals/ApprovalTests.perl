@@ -10,12 +10,11 @@ use English qw(-no_match_vars);
 # Ensure a recent version of Test::Pod
 Readonly my $MIN_TP => 1.22;
 
-my $skip = 0;
-## no critic (ProhibitStringyEval)
-eval "use Test::Pod $MIN_TP" or $skip = 1;
+## no critic (ProhibitStringyEval RequireCheckingReturnValueOfEval)
+eval "use Test::Pod $MIN_TP";
 ## use critic
 
-if ( $skip or $EVAL_ERROR ) {
+if ($EVAL_ERROR) {
     plan skip_all => "Test::Pod $MIN_TP required for testing POD";
 }
 
