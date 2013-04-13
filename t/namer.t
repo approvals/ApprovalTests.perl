@@ -10,19 +10,19 @@ use Test::More;
 
 describe 'A Namer', sub {
     my $n = Test::Approvals::Namers::DefaultNamer->new(
-        directory => 'c:\tmp',
+        directory => 'c:\\tmp',
         name      => 'foo'
     );
 
     it 'Provides the approved filename', sub {
         my ($spec) = @_;
-        is $n->get_approved_file('txt'), 'C:\tmp\namer.t.foo.approved.txt',
+        is $n->get_approved_file('txt'), 'C:\\tmp\\namer.t.foo.approved.txt',
           $spec;
     };
 
     it 'Provides the received filename', sub {
         my ($spec) = @_;
-        is $n->get_received_file('txt'), 'C:\tmp\namer.t.foo.received.txt',
+        is $n->get_received_file('txt'), 'C:\\tmp\\namer.t.foo.received.txt',
           $spec;
     };
 
@@ -32,7 +32,7 @@ describe 'A Namer', sub {
             directory => 'c:/tmp/',
             name      => 'foo.'
         );
-        is $o->get_received_file('.txt'), 'C:\tmp\namer.t.foo.received.txt',
+        is $o->get_received_file('.txt'), 'C:\\tmp\\namer.t.foo.received.txt',
           $spec;
     };
 
