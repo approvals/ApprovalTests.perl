@@ -51,8 +51,22 @@ describe 'A File Launcher Reporter' => sub {
 describe 'A BeyondCompare Reporter' => sub {
     it 'Reports with BeyondCompare' => sub {
         use_name(shift);
-        ok test_reporter 'Test::Approvals::Reporters::BeyondCompareReporter',
-          namer()->name();
+        my $class    = 'Test::Approvals::Reporters::BeyondCompareReporter';
+        my $reporter = $class->new();
+        my $cmd      = $reporter->exe . q{ } . $reporter->argv;
+
+        my $programs = qr{C:\\Program\sFiles(?:\s[(]x86[)])?\\}mxs;
+        my $program  = qr{Beyond\sCompare\s3\\BCompare.exe\s}mxs;
+
+        my $ok = like $cmd,
+          qr{$programs $program "RECEIVED"\s"APPROVED"}mxs,
+          namer()->name;
+
+        if ( !$ok ) {
+            $reporter->report( 'r.txt', 'a.txt' );
+        }
+
+        return;
     };
 };
 
