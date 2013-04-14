@@ -29,7 +29,6 @@ t/00-load.t
 t/a1.txt
 t/approvals.t
 t/b.txt
-t/boilerplate.t
 t/fileapprover.t
 t/manifest.t
 t/namer.t
