@@ -66,6 +66,10 @@ __END__
 
 Test::Approvals - Capture human intelligence in your tests
 
+=head1 VERSION
+
+This documentation refers to Test::Approvals version 0.0.1
+
 =head1 SYNOPSIS
 
     use Test::Approvals qw(use_reporter verify_ok);
@@ -82,10 +86,6 @@ structures and objects.  Perl already has great modules that overlap with
 ApprovalTests, but Test::Approvals really shines when you take advantage of
 reporters to provide different views into failing tests.  Sometimes printing to 
 STDOUT just isn't enough.  
-
-=head1 VERSION
-
-This documentation refers to Test::Approvals version 0.0.1
 
 =head1 SUBROUTINES/METHODS
 

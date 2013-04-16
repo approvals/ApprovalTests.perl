@@ -18,6 +18,7 @@ my $builder = Module::Build->new(
     requires => {
         'autodie'        => 0,
         'Carp'           => 0,
+        'English'        => 0,
         'Exporter'       => 0,
         'File::Compare'  => 0,
         'File::Next'     => 0,
