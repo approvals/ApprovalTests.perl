@@ -137,7 +137,8 @@ None known.
 
 =head1 BUGS AND LIMITATIONS
 
-None known.
+Windows-only.  Linux/OSX/other support will be added when time and access to 
+those platforms permit.
 
 =head1 AUTHOR
 

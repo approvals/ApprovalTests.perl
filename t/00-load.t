@@ -3,6 +3,7 @@ use 5.006;
 use strict;
 use warnings FATAL => 'all';
 use Test::More;
+use version; our $VERSION = qv(0.0.1);
 
 plan tests => 1;
 
