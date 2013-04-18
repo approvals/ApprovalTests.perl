@@ -28,6 +28,7 @@ my $builder = Module::Build->new(
         'Getopt::Euclid' => 0,
         'Modern::Perl'   => 0,
         'Moose'          => 0,
+        'Moose::Role'    => 0,
         'Readonly'       => 0,
         'Storable'       => 0,
         'Test::Builder'  => 0,
