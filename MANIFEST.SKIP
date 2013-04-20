@@ -1,5 +1,5 @@
 ^[.]git
-_c?mtimes
+_[cv]?m?times
 [.]bak$
 MANIFEST.SKIP
 ^MYMETA\.yml$

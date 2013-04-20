@@ -50,9 +50,9 @@ while ( defined( my $file = $next_file->() ) ) {
     open my $src, '<', "$file.v.bak";
     open my $tar, '>', $file;
     while ( defined( my $line = <$src> ) ) {
-        if ( $line =~ /\$VERSION\s*=\s*qv\(("?[^"\)]*"?)\)/msx ) {
+        if ( $line =~ /\$VERSION\s*=\s*qv\((["']?[^'"\)]*["']?)\)/msx ) {
             my $v = $1;
-            $line =~ s/$v/"$nv"/;
+            $line =~ s/$v/'$nv'/;
         }
 
         if ( $line =~ /This\s*documentation\s*.*?version\s*(.*)$/msx ) {
