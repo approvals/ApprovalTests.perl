@@ -4,7 +4,7 @@ use strict;
 use warnings FATAL => qw(all);
 
 {
-    use version; our $VERSION = qv(0.0.1);
+    use version; our $VERSION = qv("v0.0_1");
 
     use Moose;
     use File::Spec;
@@ -47,8 +47,7 @@ Test::Approvals::Namers::DefaultNamer - Default algorithm for generating names
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Namers::DefaultNamer version 0.0.1
-
+This documentation refers to Test::Approvals::Namers::DefaultNamer version v0.0_1
 =head1 SYNOPSIS
 
     # C:/usr/example.pl

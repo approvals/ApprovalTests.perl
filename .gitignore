@@ -21,3 +21,4 @@ Test-Approvals-*
 Test-Approvals-*.tar.gz
 tools/_cmtimes
 tools/_mtimes
+tools/_vtimes

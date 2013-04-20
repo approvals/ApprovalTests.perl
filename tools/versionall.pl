@@ -4,9 +4,10 @@ use Modern::Perl '2012';
 use strict;
 use warnings FATAL => 'all';
 use autodie;
-use version; our $VERSION = qv("v0.0_1");
+use version; our $VERSION = qv(0.0.1);
 
 use Carp;
+use File::Copy;
 use File::Next;
 use File::Spec;
 use File::stat;
@@ -18,19 +19,20 @@ use Storable;
 my $print_info = $ARGV{-v};
 my $input      = $ARGV{-i};
 my $force      = $ARGV{'-f'};
-my $cache      = File::Spec->catfile( Bin(), '_cmtimes' );
+my $nv         = $ARGV{-n};
+my $cache      = File::Spec->catfile( Bin(), '_vtimes' );
 
 Readonly my $SAYERR => 'Could not write to standard output.';
 
 if ($print_info) {
     say "Looking for Perl sources in $input" or croak $SAYERR;
-    say "perlcritic options: $ARGV{-C}"      or croak $SAYERR;
 }
 
 my $next_file = File::Next::files(
     {
         descend_filter => sub { $_ ne '.git' && $_ ne 'blib' },
-        file_filter => sub { $_ =~ /[.](?:p[lm]|t)$/smx }
+        file_filter =>
+          sub { $_ !~ /versionall.pl$/mxs && $_ =~ /[.](?:p[lm]|t)$/smx }
     },
     $input
 );
@@ -43,12 +45,27 @@ while ( defined( my $file = $next_file->() ) ) {
         next;
     }
 
-    my $perlcritic = "perlcritic $ARGV{-C} $file";
-    if ($print_info) {
-        say $perlcritic or croak $SAYERR;
-    }
+    copy $file, "$file.v.bak";
 
-    system $perlcritic;
+    open my $src, '<', "$file.v.bak";
+    open my $tar, '>', $file;
+    while ( defined( my $line = <$src> ) ) {
+        if ( $line =~ /\$VERSION\s*=\s*qv\(("?[^"\)]*"?)\)/msx ) {
+            my $v = $1;
+            $line =~ s/$v/"$nv"/;
+        }
+
+        if ( $line =~ /This\s*documentation\s*.*?version\s*(.*)$/msx ) {
+            my $v = $1;
+            $line =~ s/$v/$nv/;
+            $line =~ s/referes/refers/msx;
+        }
+
+        $tar->print($line);
+    }
+    $src->close();
+    $tar->close();
+
     $mtimes{$file} = stat($file)->mtime;
     store \%mtimes, $cache;
 }
@@ -59,24 +76,25 @@ __END__
 
 =head1 NAME
 
-criticizeall - Recursively find Perl sources and run perlcritic on them all
+versionall - Recursively find Perl sources and update version numbers
 
 =head1 VERSION
 
-This documentation refers to criticizeall version v0.0_1
+This documentation refers to versionall version 0.0.1
+
 =head1 USAGE
 
-   criticizeall -in .\directory [options]
+   versionall -in .\directory [options]
 
 =head1 DESCRIPTION
 
-'criticizeall' looks for perl sources in the input directory and its children 
+'versionall' looks for perl sources in the input directory and its children 
 and runs the perlcritic lint tool on each source file it finds.  The first time
-criticizeall executes, it will store the modification times of the source files 
+versionall executes, it will store the modification times of the source files 
 and on the next run, only modified files will be checked.  By default 
-criticizeall searches the current directory if no directory is speicfied, and 
+versionall searches the current directory if no directory is speicfied, and 
 uses perlcritic's '-1' option to run with the maximum number of rules enabled.
-You can use the '-f' option to force criticizeall to check all files, even those
+You can use the '-f' option to force versionall to check all files, even those
 which have not been modified.
 
 =head1 REQUIRED ARGUMENTS
@@ -95,12 +113,9 @@ Specify input directory
 		directory.type: readable
 		directory.default: '.'
 
-=item -C [=] <opts>
+=item -n [=] <number>
 
-=for Euclid
-		opts.default: '-1'
-
-criticizeall options
+Specify new version number
 
 =item -f
 

@@ -2,7 +2,7 @@ package Test::Approvals::Reporters::P4MergeReporter;
 
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv(0.0.1);
+use version; our $VERSION = qv("v0.0_1");
 
 {
     use Moose;
@@ -30,8 +30,7 @@ P4Merge
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::P4MergeReporter version 0.0.1
-
+This documentation refers to Test::Approvals::Reporters::P4MergeReporter version v0.0_1
 =head1 SYNOPSIS
 
     use Test::Approvals::Reporters;

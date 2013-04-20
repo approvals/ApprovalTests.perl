@@ -7,7 +7,7 @@ use warnings FATAL => qw(all);
     use Moose;
     use Carp;
     use English qw(-no_match_vars);
-    use version; our $VERSION = qv(0.0.1);
+    use version; our $VERSION = qv("v0.0_1");
 
     has result         => ( is => 'ro', isa => 'Str', default => q{} );
     has file_extension => ( is => 'ro', isa => 'Str', default => 'txt' );
@@ -38,8 +38,7 @@ Test::Approvals::Writers::TextWriter - Writes text to files
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals version 0.0.1
-
+This documentation refers to Test::Approvals version v0.0_1
 =head1 SYNOPSIS
 
     use Test::Approvals::Writers::TextWriter;

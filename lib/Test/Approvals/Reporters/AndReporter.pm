@@ -6,7 +6,7 @@ use warnings FATAL => 'all';
 package Test::Approvals::Reporters::AndReporter;
 {
     use Moose;
-    use version; our $VERSION = qv(0.0.1);
+    use version; our $VERSION = qv("v0.0_1");
 
     has reporters => ( is => 'ro' );
 
