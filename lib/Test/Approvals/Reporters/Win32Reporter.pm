@@ -1,10 +1,14 @@
-
 package Test::Approvals::Reporters::Win32Reporter;
-{
-    use Moose::Role;
 
+use strict;
+use warnings FATAL => 'all';
+use version; our $VERSION = qv(0.0.1);
+
+{
+    use Capture::Tiny qw(:all);
     use File::Touch;
     use FindBin::Real qw(Bin);
+    use Moose::Role;
     use Win32::Process;
 
     requires qw(exe argv);
@@ -42,7 +46,7 @@ package Test::Approvals::Reporters::Win32Reporter;
         my ( $relative_path, $exe ) = @_;
 
         my $find_in_path = sub {
-            my $location = `where $exe 2> NUL`;
+            my ($location) = capture { system 'where', $exe };
             if ( defined $location ) {
                 chomp $location;
                 return $location;
@@ -74,6 +78,44 @@ __END__
 
 Test::Approvals::Reporters::Win32Reporter - Generic base for creating reporters
 that work on Windows.
+
+=head1 VERSION
+
+This documentation refers to Test::Approvals::Namers::DefaultNamer version 0.0.1
+
+=head1 SYNOPSIS
+
+    package Test::Approvals::Reporters::MyCoolReporter;
+
+    use strict;
+    use warnings FATAL => 'all';
+
+    {
+        use version; our $VERSION = qv(0.0.1);
+        use Moose;
+
+        with 'Test::Approvals::Reporters::Win32Reporter';
+        with 'Test::Approvals::Reporters::Reporter';
+        with 'Test::Approvals::Reporters::EnvironmentAwareReporter';
+
+        sub exe {
+            return locate_exe( 'CoolCo', 'CooDiff.exe' );
+        }
+
+        sub argv {
+            return default_argv();
+        }
+    }
+    __PACKAGE__->meta->make_immutable;
+    1;
+
+=head1 DESCRIPTION
+
+This module provides a common base for reporters on Windows.  By extending this
+class, you get a search strategy for locating your reporter, and you don't have
+to worry about the details of launching a detatched child process.
+
+=head1 SUBROUTINES/METHODS
 
 =head2 default_argv
 
@@ -111,3 +153,54 @@ it's underneath the Windows "Program Files" directory.
 
 Normalize the paths to received and approved files, then try to launch the diff
 utility.    
+
+=head1 DIAGNOSTICS
+
+None at this time.
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+None.
+
+=head1 DEPENDENCIES
+
+=over
+
+Capture::Tiny
+File::Touch
+FindBin::Real
+Moose::Role
+version
+Win32::Process
+
+=back
+
+=head1 INCOMPATIBILITIES
+
+None known.
+
+=head1 BUGS AND LIMITATIONS
+
+Windows-only.  Linux/OSX/other support will be added when time and access to 
+those platforms permit.
+
+=head1 AUTHOR
+
+Jim Counts - @jamesrcounts
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2013 Jim Counts
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    L<http://www.apache.org/licenses/LICENSE-2.0>
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+

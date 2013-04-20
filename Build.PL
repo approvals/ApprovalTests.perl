@@ -17,6 +17,7 @@ my $builder = Module::Build->new(
     },
     requires => {
         'autodie'        => 0,
+        'Capture::Tiny'  => 0,
         'Carp'           => 0,
         'English'        => 0,
         'Exporter'       => 0,
