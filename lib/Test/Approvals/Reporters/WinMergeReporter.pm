@@ -28,7 +28,7 @@ Test::Approvals::Reporters::WinMergeReporter - Report failure with WinMerge
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Namers::DefaultNamer version 0.0.1
+This documentation refers to Test::Approvals::Reporters::WinMergeReporter version 0.0.1
 
 =head1 SYNOPSIS
 

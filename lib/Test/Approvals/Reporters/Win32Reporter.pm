@@ -81,7 +81,7 @@ that work on Windows.
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Namers::DefaultNamer version 0.0.1
+This documentation refers to Test::Approvals::Reporters::Win32Reporter version 0.0.1
 
 =head1 SYNOPSIS
 
