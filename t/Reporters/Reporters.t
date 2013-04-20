@@ -94,4 +94,9 @@ describe 'A TortoiseMerge Reporter' => sub {
     };
 };
 
-run_tests();
+if ( !$ENV{RELEASE_TESTING} ) {
+    plan( skip_all => 'Author tests not required for installation' );
+}
+else {
+    run_tests();
+}
