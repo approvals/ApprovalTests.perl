@@ -7,7 +7,7 @@ use warnings FATAL => qw(all);
     use Moose;
     use Carp;
     use English qw(-no_match_vars);
-    use version; our $VERSION = qv("v0.0_1");
+    use version; our $VERSION = qv('v0.0_1');
 
     has result         => ( is => 'ro', isa => 'Str', default => q{} );
     has file_extension => ( is => 'ro', isa => 'Str', default => 'txt' );

@@ -5,7 +5,7 @@ use warnings FATAL => 'all';
 
 package Test::Approvals::Reporters::IntroductionReporter;
 {
-    use version; our $VERSION = qv("v0.0_1");
+    use version; our $VERSION = qv('v0.0_1');
 
     use Moose;
     use Test::Builder;

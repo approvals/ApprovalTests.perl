@@ -1,7 +1,7 @@
 package Test::Approvals;
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv("v0.0_1");
+use version; our $VERSION = qv('v0.0_1');
 
 use Test::Approvals::Reporters;
 use Test::Approvals::Namers::DefaultNamer;

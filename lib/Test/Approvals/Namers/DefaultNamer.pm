@@ -4,7 +4,7 @@ use strict;
 use warnings FATAL => qw(all);
 
 {
-    use version; our $VERSION = qv("v0.0_1");
+    use version; our $VERSION = qv('v0.0_1');
 
     use Moose;
     use File::Spec;

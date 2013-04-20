@@ -5,7 +5,7 @@ use warnings FATAL => 'all';
 
 package Test::Approvals::Reporters::FakeReporter;
 {
-    use version; our $VERSION = qv("v0.0_1");
+    use version; our $VERSION = qv('v0.0_1');
     use Moose;
 
     has 'was_called', isa => 'Bool', is => 'rw', default => 0;

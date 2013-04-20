@@ -3,7 +3,7 @@ package Test::Approvals::Specs;
 use strict;
 use warnings FATAL => qw(all);
 
-use version; our $VERSION = qv("v0.0_1");
+use version; our $VERSION = qv('v0.0_1');
 use base qw(Exporter);
 our @EXPORT_OK = qw(describe it run_tests);
 
