@@ -7,6 +7,7 @@ use autodie;
 use version; our $VERSION = qv(0.0.1);
 
 use Carp;
+use Digest::SHA;
 use File::Copy;
 use File::Next;
 use File::Spec;
@@ -41,8 +42,16 @@ my %mtimes = -e $cache ? %{ retrieve($cache) } : ();
 
 while ( defined( my $file = $next_file->() ) ) {
     my $mtime = stat($file)->mtime;
-    if ( ( !$force ) and $mtime ~~ $mtimes{$file} ) {
+    if ( ( !$force ) and $mtime ~~ $mtimes{$file}->{mtime} ) {
         next;
+    }
+    
+    if((!$force) and get_digest($file) ~~ $mtimes{$file}->{digest}){
+        next;
+    }
+
+    if ($print_info) {        
+        say $file or croak $SAYERR;
     }
 
     copy $file, "$file.v.bak";
@@ -55,8 +64,18 @@ while ( defined( my $file = $next_file->() ) ) {
     $src->close();
     $tar->close();
 
-    $mtimes{$file} = stat($file)->mtime;
+    $mtimes{$file}->{mtime} = stat($file)->mtime;
+    $mtimes{$file}->{digest}=get_digest($file);
     store \%mtimes, $cache;
+}
+
+sub get_digest{
+    my($file)=@_;
+my $ctx = Digest::SHA->new('sha256');
+    $ctx->addfile($file);
+    my $digest = $ctx->b64digest;
+    undef $ctx;
+return $digest;    
 }
 
 sub process_line {
