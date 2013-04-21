@@ -5,7 +5,7 @@ use warnings FATAL => 'all';
 
 package Test::Approvals::Reporters::FirstWorkingReporter;
 {
-    use version; our $VERSION = qv('v0.0.1_2');
+    use version; our $VERSION = qv('v0.0.1_3');
 
     use Moose;
     use Moose::Util qw(does_role);
