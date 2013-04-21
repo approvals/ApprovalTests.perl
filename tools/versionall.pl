@@ -45,12 +45,12 @@ while ( defined( my $file = $next_file->() ) ) {
     if ( ( !$force ) and $mtime ~~ $mtimes{$file}->{mtime} ) {
         next;
     }
-    
-    if((!$force) and get_digest($file) ~~ $mtimes{$file}->{digest}){
+
+    if ( ( !$force ) and get_digest($file) ~~ $mtimes{$file}->{digest} ) {
         next;
     }
 
-    if ($print_info) {        
+    if ($print_info) {
         say $file or croak $SAYERR;
     }
 
@@ -64,18 +64,18 @@ while ( defined( my $file = $next_file->() ) ) {
     $src->close();
     $tar->close();
 
-    $mtimes{$file}->{mtime} = stat($file)->mtime;
-    $mtimes{$file}->{digest}=get_digest($file);
+    $mtimes{$file}->{mtime}  = stat($file)->mtime;
+    $mtimes{$file}->{digest} = get_digest($file);
     store \%mtimes, $cache;
 }
 
-sub get_digest{
-    my($file)=@_;
-my $ctx = Digest::SHA->new('sha256');
+sub get_digest {
+    my ($file) = @_;
+    my $ctx = Digest::SHA->new('sha256');
     $ctx->addfile($file);
     my $digest = $ctx->b64digest;
     undef $ctx;
-return $digest;    
+    return $digest;
 }
 
 sub process_line {

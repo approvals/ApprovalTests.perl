@@ -1,19 +1,16 @@
-#!perl
+package Test::Approvals::Reporters::FirstWorkingReporter;
 
 use strict;
 use warnings FATAL => 'all';
+use version; our $VERSION = qv('v0.0.1_1');
 
-package Test::Approvals::Reporters::FirstWorkingReporter;
 {
-    use version; our $VERSION = qv('v0.0.1_1');
-
-    use Moose;
-    use Moose::Util qw(does_role);
-
     use Carp;
     use File::Spec;
-    use List::Util qw(first);
     use List::MoreUtils qw(any);
+    use List::Util qw(first);
+    use Moose;
+    use Moose::Util qw(does_role);
 
     with 'Test::Approvals::Reporters::MultiReporter';
     with 'Test::Approvals::Reporters::Win32Reporter';
@@ -60,6 +57,10 @@ __END__
 Test::Approvals::Reporters::FirstWorkingReporter - Report using the first 
 reporter that appears to be working in the test environment.
 
+=head1 VERSION
+
+This documentation refers to Test::Approvals::Reporters::FirstWorkingReporter version v0.0.1_1
+
 =head1 SYNOPSIS
     
     use Test::Approvals::Reporters;
@@ -76,4 +77,75 @@ reporter that appears to be working in the test environment.
     my $received = 'test.received.txt';
     my $approved = 'test.approved.txt';
     $reporter->report($received, $approved);
+
+=head1 DESCRIPTION
+
+Use this module to create a MultiReporter that chooses the first reporter it can 
+find which appears to be working in the test environment.
+
+=head1 SUBROUTINES/METHODS
+
+=head2 report
+
+    my $received = 'test.received.txt';
+    my $approved = 'test.approved.txt';
+    $reporter->report($received, $approved);
+
+If any reporter is working in the test environment, use it to report.
+
+=head2 is_working_in_this_environment
+
+    my $working = $reporter->is_working_in_this_environment;
+
+If any reporter is working in the test environment, return a true value.
+
+=head1 DIAGNOSTICS
+
+None at this time.
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+None
+
+=head1 DEPENDENCIES
+
+=over 4
+
+Carp
+File::Spec
+List::MoreUtils
+List::Util
+Moose
+Moose::Util
+
+=back
+
+=head1 INCOMPATIBILITIES
+
+None known.
+
+=head1 BUGS AND LIMITATIONS
+
+Windows-only.  Linux/OSX/other support will be added when time and access to 
+those platforms permit.
+
+=head1 AUTHOR
+
+Jim Counts - @jamesrcounts
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2013 Jim Counts
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    L<http://www.apache.org/licenses/LICENSE-2.0>
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
