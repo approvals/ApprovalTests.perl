@@ -5,7 +5,7 @@ use warnings FATAL => 'all';
 
 package Test::Approvals::Reporters::DiffReporter;
 {
-    use version; our $VERSION = qv('v0.0.1_3');
+    use version; our $VERSION = qv('v0.0.1_1');
     use Moose;
     use Test::Approvals::Reporters;
 

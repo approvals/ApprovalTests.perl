@@ -2,7 +2,7 @@ package Test::Approvals::Reporters::KDiffReporter;
 
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.1_3');
+use version; our $VERSION = qv('v0.0.1_1');
 
 {
     use Moose;
@@ -29,7 +29,7 @@ Test::Approvals::Reporters::KDiffReporter - Report failure with KDiff.
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::KDiffReporter version v0.0.1_3
+This documentation refers to Test::Approvals::Reporters::KDiffReporter version v0.0.1_1
 
 =head1 SYNOPSIS
 
@@ -69,8 +69,8 @@ Make sure you have KDiff3 installed if you want to use this module.
 
 =over 4
 
-use Moose
-use version
+Moose
+version
 
 =back
 

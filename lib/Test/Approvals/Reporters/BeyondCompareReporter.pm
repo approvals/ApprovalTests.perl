@@ -5,7 +5,7 @@ use warnings FATAL => 'all';
 
 package Test::Approvals::Reporters::BeyondCompareReporter;
 {
-    use version; our $VERSION = qv('v0.0.1_3');
+    use version; our $VERSION = qv('v0.0.1_1');
     use Moose;
 
     with 'Test::Approvals::Reporters::Win32Reporter';

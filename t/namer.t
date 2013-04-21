@@ -1,7 +1,7 @@
 #! perl
 use strict;
 use warnings FATAL => qw(all);
-use version; our $VERSION = qv('v0.0.1_3');
+use version; our $VERSION = qv('v0.0.1_1');
 
 use FindBin::Real qw(Bin);
 use Test::Approvals::Namers::DefaultNamer;
