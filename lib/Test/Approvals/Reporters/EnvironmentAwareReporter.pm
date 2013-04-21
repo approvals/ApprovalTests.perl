@@ -5,7 +5,7 @@ use warnings FATAL => 'all';
 
 package Test::Approvals::Reporters::EnvironmentAwareReporter;
 {
-    use version; our $VERSION = qv('v0.0_1');
+    use version; our $VERSION = qv('v0.0.1_2');
 
     use Moose::Role;
 

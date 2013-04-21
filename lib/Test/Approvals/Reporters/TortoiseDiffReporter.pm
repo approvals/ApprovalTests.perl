@@ -2,7 +2,7 @@ package Test::Approvals::Reporters::TortoiseDiffReporter;
 
 use strict;
 use warnings FATAL => qw(all);
-use version; our $VERSION = qv('v0.0_1');
+use version; our $VERSION = qv('v0.0.1_2');
 
 {
     use Moose;
@@ -28,7 +28,7 @@ TortoiseMerge
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::TortoiseDiffReporter version v0.0_1
+This documentation refers to Test::Approvals::Reporters::TortoiseDiffReporter version v0.0.1_2
 =head1 SYNOPSIS
 
     use Test::Approvals::Reporters;

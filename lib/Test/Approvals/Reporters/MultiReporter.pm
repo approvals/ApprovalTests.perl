@@ -2,7 +2,7 @@ package Test::Approvals::Reporters::MultiReporter;
 
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0_1');
+use version; our $VERSION = qv('v0.0.1_2');
 
 {
     use Moose::Role;
@@ -21,7 +21,7 @@ reporters to extend.
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::MultiReporter version v0.0_1
+This documentation refers to Test::Approvals::Reporters::MultiReporter version v0.0.1_2
 
 =head1 SYNOPSIS
 
@@ -32,7 +32,7 @@ This documentation refers to Test::Approvals::Reporters::MultiReporter version v
 
     {
         use Moose;
-        use version; our $VERSION = qv('v0.0_1');
+        use version; our $VERSION = qv('v0.0.1_2');
 
         with 'Test::Approvals::Reporters::Reporter';
         with 'Test::Approvals::Reporters::MultiReporter';
