@@ -19,6 +19,8 @@ use version; our $VERSION = qv('v0.0.1_2');
         return default_argv();
     }
 }
+__PACKAGE__->meta->make_immutable;
+
 1;
 __END__
 =head1 NAME
@@ -29,6 +31,7 @@ TortoiseMerge
 =head1 VERSION
 
 This documentation refers to Test::Approvals::Reporters::TortoiseDiffReporter version v0.0.1_2
+
 =head1 SYNOPSIS
 
     use Test::Approvals::Reporters;
@@ -62,7 +65,7 @@ Make sure you have TortoiseMerge installed if you want to use this module.
 
 =head1 DEPENDENCIES
 
-=over
+=over 4
 
 use Moose
 use version
