@@ -31,6 +31,7 @@ P4Merge
 =head1 VERSION
 
 This documentation refers to Test::Approvals::Reporters::P4MergeReporter version v0.0_1
+
 =head1 SYNOPSIS
 
     use Test::Approvals::Reporters;
@@ -67,7 +68,7 @@ Make sure you have P4Merge installed if you want to use this module.
 
 =head1 DEPENDENCIES
 
-=over
+=over 4
 
 use Moose
 use version
