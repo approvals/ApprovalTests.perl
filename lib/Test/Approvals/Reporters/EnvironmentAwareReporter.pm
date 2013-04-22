@@ -32,7 +32,7 @@ This documentation refers to Test::Approvals::Reporters::EnvironmentAwareReporte
 	    use version; our $VERSION = qv('v0.0.1_2');
 	    use Moose;
 
-	    with 'Test::Approvals::Reporters::Reporter';
+		with 'Test::Approvals::Reporters::Reporter';
 		with 'Test::Approvals::Reporters::EnvironmentAwareReporter'
 
 		# ...
