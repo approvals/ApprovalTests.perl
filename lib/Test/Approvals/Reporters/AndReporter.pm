@@ -43,6 +43,11 @@ This documentation refers to Test::Approvals::Reporters::AndReporter version v0.
 
     $and->report( 'r.txt', 'a.txt' );
 
+=head1 DESCRIPTION
+
+This module is a MultiReporter configured to execute every reporter passed into
+the constructor.
+
 =head1 SUBROUTINES/METHODS
 
 =head2 report
