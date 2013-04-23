@@ -39,7 +39,11 @@ my $builder = Module::Build->new(
         'Storable'        => 0,
         'Test::Builder'   => 0,
     },
-    add_to_cleanup     => ['Test-Approvals-*'],
+    add_to_cleanup     => ['Test-Approvals-*', '*.bak', 'tools/*.bak', 
+    't/*.bak','t/Reporters/*.bak', 'lib/Test/Approvals/Core/*.bak',
+    'lib/Test/Approvals/Namers/*.bak','lib/Test/Approvals/Reporters/*.bak',
+    'lib/Test/Approvals/Writers/*.bak','lib/Test/Approvals/*.bak',
+    'lib/Test/*.bak',],
     create_makefile_pl => 'traditional',
 );
 
