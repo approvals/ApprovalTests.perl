@@ -8,3 +8,5 @@ Test-Approvals-.*[.]tar[.]gz
 ^_build
 ^Build$
 ^Build\.bat$
+^blib
+[.]tmp$
