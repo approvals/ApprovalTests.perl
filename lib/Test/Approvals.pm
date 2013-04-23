@@ -1,7 +1,7 @@
 package Test::Approvals;
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0_2');
+use version; our $VERSION = qv('v0.0.3');
 
 use Test::Approvals::Reporters;
 use Test::Approvals::Namers::DefaultNamer;
@@ -68,7 +68,7 @@ Test::Approvals - Capture human intelligence in your tests
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals version v0.0_2
+This documentation refers to Test::Approvals version v0.0.3
 =head1 SYNOPSIS
 
     use Test::Approvals qw(use_reporter verify_ok);

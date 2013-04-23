@@ -2,7 +2,7 @@ package Test::Approvals::Reporters::Win32Reporter;
 
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0_2');
+use version; our $VERSION = qv('v0.0.3');
 
 {
     use Capture::Tiny qw(:all);
@@ -81,7 +81,7 @@ that work on Windows.
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::Win32Reporter version v0.0_2
+This documentation refers to Test::Approvals::Reporters::Win32Reporter version v0.0.3
 =head1 SYNOPSIS
 
     package Test::Approvals::Reporters::MyCoolReporter;
@@ -90,7 +90,7 @@ This documentation refers to Test::Approvals::Reporters::Win32Reporter version v
     use warnings FATAL => 'all';
 
     {
-        use version; our $VERSION = qv('v0.0_2');
+        use version; our $VERSION = qv('v0.0.3');
         use Moose;
 
         with 'Test::Approvals::Reporters::Win32Reporter';
