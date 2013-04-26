@@ -4,25 +4,26 @@ use warnings FATAL => 'all';
 use Module::Build;
 
 my $builder = Module::Build->new(
-    module_name        => 'Test::Approvals',
-    license            => 'apache',
-    dist_author        => q{Jim Counts <jamesrcounts@outlook.com>},
-    dist_version_from  => 'lib/Test/Approvals.pm',
-    release_status     => 'unstable',
-    configure_requires => {
+    module_name          => 'Test::Approvals',
+    license              => 'apache',
+    dist_author          => q{Jim Counts <jamesrcounts@outlook.com>},
+    dist_version_from    => 'lib/Test/Approvals.pm',
+    release_status       => 'testing',
+    recursive_test_files => 1,
+    configure_requires   => {
         'Module::Build' => 0,
     },
     build_requires => {
-        'autodie'       => 0,
-        'English'       => 0,
-        'FindBin::Real' => 0,
-        'File::Touch'   => 0,
-        'Perl6::Slurp'  => 0,
-        'Readonly'      => 0,
-        'Test::More'    => 0,
-        'version'       => 0,
+        'Test::More' => 0,
     },
     requires => {
+        'autodie'         => 0,
+        'English'         => 0,
+        'FindBin::Real'   => 0,
+        'File::Touch'     => 0,
+        'Perl6::Slurp'    => 0,
+        'Readonly'        => 0,
+        'version'         => 0,
         'Capture::Tiny'   => 0,
         'Carp'            => 0,
         'Exporter'        => 0,
