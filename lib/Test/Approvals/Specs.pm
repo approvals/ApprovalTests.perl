@@ -3,7 +3,7 @@ package Test::Approvals::Specs;
 use strict;
 use warnings FATAL => qw(all);
 
-use version; our $VERSION = qv('v0.0.3');
+use version; our $VERSION = qv('v0.0.4_1');
 use base qw(Exporter);
 our @EXPORT_OK = qw(describe it run_tests);
 
@@ -45,7 +45,8 @@ Test::Approvals::Specs - Tiny BDD Tools
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Specs version v0.0.3
+This documentation refers to Test::Approvals::Specs version v0.0.4_1
+
 =head1 SYNOPSIS
 
     use Test::Approvals::Specs qw(describe it run_tests);

@@ -8,7 +8,7 @@ my $builder = Module::Build->new(
     license            => 'apache',
     dist_author        => q{Jim Counts <jamesrcounts@outlook.com>},
     dist_version_from  => 'lib/Test/Approvals.pm',
-    release_status     => 'stable',
+    release_status     => 'unstable',
     configure_requires => {
         'Module::Build' => 0,
     },
@@ -16,6 +16,7 @@ my $builder = Module::Build->new(
         'autodie'       => 0,
         'English'       => 0,
         'FindBin::Real' => 0,
+        'File::Touch'   => 0,
         'Perl6::Slurp'  => 0,
         'Readonly'      => 0,
         'Test::More'    => 0,

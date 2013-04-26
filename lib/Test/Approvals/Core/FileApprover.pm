@@ -3,7 +3,7 @@ package Test::Approvals::Core::FileApprover;
 use strict;
 use warnings FATAL => 'all';
 
-use version; our $VERSION = qv('v0.0.3');
+use version; our $VERSION = qv('v0.0.4_1');
 
 use File::Compare;
 use Test::Builder;
@@ -66,7 +66,8 @@ Test::Approvals::Core::FileApprover - Verify two files are the same
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Core::FileApprover version v0.0.3
+This documentation refers to Test::Approvals::Core::FileApprover version v0.0.4_1
+
 =head1 SYNOPSIS
 
     use Test::Approvals::Core::FileApprover qw(verify);
