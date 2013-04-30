@@ -4,9 +4,9 @@ use warnings FATAL => 'all';
 use Module::Build;
 
 BEGIN {
-  if ($^O ne 'Win32') {
-    die "No support for OS\n";
-  }
+    if ( $^O ne 'MSWin32' ) {
+        die "No support for OS\n";
+    }
 }
 
 my $builder = Module::Build->new(
