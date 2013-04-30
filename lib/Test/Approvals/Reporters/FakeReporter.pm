@@ -2,7 +2,7 @@ package Test::Approvals::Reporters::FakeReporter;
 
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.4_1');
+use version; our $VERSION = qv('v0.0.4_2');
 
 {
     use Moose;
@@ -28,7 +28,7 @@ anything, but you can check to see if it was called.
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::FakeReporter version v0.0.4_1
+This documentation refers to Test::Approvals::Reporters::FakeReporter version v0.0.4_2
 
 =head1 SYNOPSIS
 
