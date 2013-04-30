@@ -50,5 +50,3 @@ tools/criticizeall.pl
 tools/tidyall.pl
 tools/versionall.pl
 Makefile.PL
-META.yml
-META.json

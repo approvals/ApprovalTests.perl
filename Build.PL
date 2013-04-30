@@ -3,6 +3,12 @@ use strict;
 use warnings FATAL => 'all';
 use Module::Build;
 
+BEGIN {
+  if ($^O ne 'Win32') {
+    die "No support for OS\n";
+  }
+}
+
 my $builder = Module::Build->new(
     module_name          => 'Test::Approvals',
     license              => 'apache',
