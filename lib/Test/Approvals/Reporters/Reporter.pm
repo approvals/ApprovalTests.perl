@@ -3,7 +3,7 @@ use strict;
 use warnings FATAL => 'all';
 {
 
-    use version; our $VERSION = qv('v0.0.4_2');
+    use version; our $VERSION = qv('v0.0.4');
     use Moose::Role;
 
     has test_name => ( is => 'rw', isa => 'Str', default => q{} );
@@ -19,13 +19,13 @@ extend.
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::Reporter version v0.0.4_2
+This documentation refers to Test::Approvals::Reporters::Reporter version v0.0.4
 
 =head1 SYNOPSIS
 
 	package Test::Approvals::Reporters::MyCoolReporter;
 	{
-	    use version; our $VERSION = qv('v0.0.4_2');
+	    use version; our $VERSION = qv('v0.0.4');
 	    use Moose;
 
 	    with 'Test::Approvals::Reporters::Reporter';

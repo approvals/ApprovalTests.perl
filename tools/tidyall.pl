@@ -4,7 +4,7 @@ use Modern::Perl '2012';
 use strict;
 use warnings FATAL => 'all';
 use autodie;
-use version; our $VERSION = qv('v0.0.4_2');
+use version; our $VERSION = qv('v0.0.4');
 
 use Carp;
 use File::Next;
@@ -62,7 +62,7 @@ tidyall - Recursively find all Perl sources and run perltidy on them all
 
 =head1 VERSION
 
-This documentation refers to tidyall version v0.0.4_2
+This documentation refers to tidyall version v0.0.4
 
 =head1 USAGE
 
