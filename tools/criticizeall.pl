@@ -4,7 +4,7 @@ use Modern::Perl '2012';
 use strict;
 use warnings FATAL => 'all';
 use autodie;
-use version; our $VERSION = qv('v0.0.4');
+use version; our $VERSION = qv('v0.0.4_3');
 
 use Carp;
 use File::Next;
@@ -63,7 +63,7 @@ criticizeall - Recursively find Perl sources and run perlcritic on them all
 
 =head1 VERSION
 
-This documentation refers to criticizeall version v0.0.4
+This documentation refers to criticizeall version v0.0.4_3
 
 =head1 USAGE
 

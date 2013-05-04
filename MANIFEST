@@ -49,4 +49,3 @@ t/Reporters/reporters.t.a_winmerge_reporter_reports_with_winmerge.approved.txt
 tools/criticizeall.pl
 tools/tidyall.pl
 tools/versionall.pl
-Makefile.PL

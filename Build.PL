@@ -1,4 +1,4 @@
-use 5.006;
+use 5.014;
 use strict;
 use warnings FATAL => 'all';
 use Module::Build;
@@ -14,7 +14,7 @@ my $builder = Module::Build->new(
     license              => 'apache',
     dist_author          => q{Jim Counts <jamesrcounts@outlook.com>},
     dist_version_from    => 'lib/Test/Approvals.pm',
-    release_status       => 'stable',
+    release_status       => 'testing',
     recursive_test_files => 1,
     configure_requires   => {
         'Module::Build' => 0,
@@ -23,6 +23,7 @@ my $builder = Module::Build->new(
         'Test::More' => 0,
     },
     requires => {
+        'perl'            => 5.014000,
         'autodie'         => 0,
         'version'         => 0,
         'Capture::Tiny'   => 0,
@@ -60,8 +61,7 @@ my $builder = Module::Build->new(
         'lib/Test/Approvals/Writers/*.bak',
         'lib/Test/Approvals/*.bak',
         'lib/Test/*.bak',
-    ],
-    create_makefile_pl => 'traditional',
+    ],    
 );
 
 $builder->create_build_script();

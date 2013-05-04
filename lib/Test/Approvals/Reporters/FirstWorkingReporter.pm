@@ -2,7 +2,7 @@ package Test::Approvals::Reporters::FirstWorkingReporter;
 
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.4');
+use version; our $VERSION = qv('v0.0.4_3');
 
 {
     use Carp;
@@ -59,7 +59,7 @@ reporter that appears to be working in the test environment.
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::FirstWorkingReporter version v0.0.4
+This documentation refers to Test::Approvals::Reporters::FirstWorkingReporter version v0.0.4_3
 
 =head1 SYNOPSIS
     
