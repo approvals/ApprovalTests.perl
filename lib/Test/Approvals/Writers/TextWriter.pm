@@ -7,10 +7,10 @@ use warnings FATAL => qw(all);
     use Moose;
     use Carp;
     use English qw(-no_match_vars);
-    use version; our $VERSION = qv('v0.0.4_3');
+    use version; our $VERSION = qv('v0.0.4_4');
 
-    has result         => ( is => 'ro', isa => 'Str', default => q{} );
-    has file_extension => ( is => 'ro', isa => 'Str', default => 'txt' );
+    has result         => ( is => 'ro', isa => 'Maybe[Str]', default => q{} );
+    has file_extension => ( is => 'ro', isa => 'Str',        default => 'txt' );
 
     sub write_to {
         my ( $self, $path ) = @_;
@@ -25,7 +25,8 @@ use warnings FATAL => qw(all);
 
     sub print_to {
         my ( $self, $h ) = @_;
-        return $h->print( $self->result() );
+        my $result = $self->result // q{};
+        return $h->print($result);
     }
 }
 __PACKAGE__->meta->make_immutable;
@@ -38,7 +39,7 @@ Test::Approvals::Writers::TextWriter - Writes text to files
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals version v0.0.4_3
+This documentation refers to Test::Approvals version v0.0.4_4
 
 =head1 SYNOPSIS
 

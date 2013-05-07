@@ -3,7 +3,7 @@
 use strict;
 use warnings FATAL => qw(all);
 use autodie;
-use version; our $VERSION = qv('v0.0.4_3');
+use version; our $VERSION = qv('v0.0.4_4');
 
 use Perl6::Slurp;
 use Test::Approvals::Specs qw(describe it run_tests);
@@ -43,6 +43,17 @@ describe 'A TextWriter', sub {
         );
         is $x->file_extension, 'html', $spec;
     };
+
+    it 'Handles NULL' => sub {
+        my ($spec) = @_;
+        my $x = Test::Approvals::Writers::TextWriter->new( result => undef );
+
+        my $out_buf;
+        open my $out, '>', \$out_buf;
+        $x->print_to($out);
+        $out->close;
+        is $out_buf, undef, $spec;
+      }
 };
 
 run_tests();

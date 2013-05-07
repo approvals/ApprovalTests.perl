@@ -61,7 +61,7 @@ my $builder = Module::Build->new(
         'lib/Test/Approvals/Writers/*.bak',
         'lib/Test/Approvals/*.bak',
         'lib/Test/*.bak',
-    ],    
+    ],
 );
 
 $builder->create_build_script();
