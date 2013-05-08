@@ -1,7 +1,7 @@
 package Test::Approvals;
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.4_6');
+use version; our $VERSION = qv('v0.0.4_7');
 
 use Test::Approvals::Reporters;
 use Test::Approvals::Namers::DefaultNamer;
@@ -38,7 +38,7 @@ sub use_name_in {
     my ( $test_name, $dir ) = @_;
     $namer_instance = Test::Approvals::Namers::DefaultNamer->new(
         name      => $test_name,
-        directory => $dir
+        directory => "$dir"
     );
     return $namer_instance;
 }
@@ -66,7 +66,7 @@ sub verify_ok {
     if ( defined $name ) {
         use_name($name);
     }
-    return $test->ok( verify ($results), $namer_instance->name );
+    return $test->ok( verify($results), $namer_instance->name );
 }
 
 1;
@@ -77,7 +77,7 @@ Test::Approvals - Capture human intelligence in your tests
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals version v0.0.4_6
+This documentation refers to Test::Approvals version v0.0.4_7
 
 =head1 SYNOPSIS
 

@@ -2,11 +2,13 @@
 use strict;
 use warnings FATAL => qw(all);
 use autodie;
-use version; our $VERSION = qv('v0.0.4_6');
+use version; our $VERSION = qv('v0.0.4_7');
 
 use Test::Approvals::Specs qw(describe it run_tests);
 use Test::Approvals qw(verify use_reporter reporter use_name use_name_in namer);
 use Test::More;
+
+use Path::Class;
 
 describe 'An Approval', sub {
     use_reporter('Test::Approvals::Reporters::FakeReporter');
@@ -27,13 +29,19 @@ describe 'An Approval', sub {
           . '.received.txt';
         use_name_in( $spec, 'C:\tmp' );
         is namer()->get_received_file('txt'), $expected, namer()->name;
-      };
+    };
 
-      it 'Still provides expected name for names in other directory' => sub{
-      	my ($spec)=@_;
-      	use_name_in($spec, 'C:\tmp');
-      	is $spec, namer()->name, $spec;
-      };
+    it 'Still provides expected name for names in other directory' => sub {
+        my ($spec) = @_;
+        use_name_in( $spec, 'C:\tmp' );
+        is $spec, namer()->name, $spec;
+    };
+
+    it 'Can accept a Path-Class object as the dir' => sub {
+        my $spec = shift;
+        use_name_in( $spec, dir('C:\tmp') );
+        is namer()->directory, 'C:\tmp', namer()->name;
+    };
 };
 
 run_tests();
