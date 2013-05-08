@@ -1,0 +1,26 @@
+perltidy version 20121207 log file on a MSWin32 system, OLD_PERL_VERSION=5.014002
+Windows type is Win2003
+Configuration and command line parameters for this run:
+-nst -nse
+To find error messages search for 'WARNING' with your editor
+Indentation will be with 4 spaces
+Line 1 implies starting-indentation-level = 0
+The nesting depths in the table below are at the start of the lines.
+The indicated output line numbers are not always exact.
+ci = levels of continuation indentation; bk = 1 if in BLOCK, 0 if not.
+
+in:out indent c b  nesting   code + messages; (messages begin with >>>)
+lines  levels i k            (code begins with one '.' per indent level)
+------  ----- - - --------   -------------------------------------------
+L1:1     i0:0 0 1            package Test::Approvals::Writers::T ....
+L10:10   i1:1 0 1 {          >>>passing VERSION line; -npvl deactivates
+L15:15   i1:1 0 1 {          .sub write_to {
+L26:26   i1:1 0 1 {          .sub print_to {
+L34:34   i0:0 0 1            >>>Starting __END__ section
+L34:34   i0:0 0 1            >>>Entering POD section
+No indentation disagreement seen
+
+No lines exceeded 80 characters
+  Maximum output line length was 80 at line 13
+hit eof while in pod documentation (no =cut seen)
+	this can cause trouble with some pod utilities

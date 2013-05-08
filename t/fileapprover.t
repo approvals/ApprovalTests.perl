@@ -3,7 +3,7 @@
 use strict;
 use warnings FATAL => qw(all);
 use autodie;
-use version; our $VERSION = qv('v0.0.4_4');
+use version; our $VERSION = qv('v0.0.4_6');
 
 use Test::Approvals::Specs qw(describe it run_tests);
 use Test::Approvals::Core::FileApprover qw(verify);
