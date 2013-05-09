@@ -3,12 +3,12 @@
 use Modern::Perl '2012';
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.4_9');
+use version; our $VERSION = qv('v0.0.4_10');
 
 use English qw(-no_match_vars);
 use Test::More;
 
-## no critic (ProhibitStringyEval RequireCheckingReturnValueOfEval)
+## no critic (RequireCheckingReturnValueOfEval)
 eval {
     require Test::Perl::Critic::Progressive;
     Test::Perl::Critic::Progressive::set_critic_args( -severity => 1 );

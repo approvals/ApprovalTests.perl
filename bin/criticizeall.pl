@@ -4,9 +4,10 @@ use Modern::Perl '2012';
 use strict;
 use warnings FATAL => 'all';
 use autodie;
-use version; our $VERSION = qv('v0.0.4_9');
+use version; our $VERSION = qv('v0.0.4_10');
 
 use Carp;
+use Cwd;
 use File::Next;
 use File::Spec;
 use File::stat;
@@ -18,7 +19,7 @@ use Storable;
 my $print_info = $ARGV{-v};
 my $input      = $ARGV{-i};
 my $force      = $ARGV{'-f'};
-my $cache      = File::Spec->catfile( Bin(), '_cmtimes' );
+my $cache      = File::Spec->catfile( getcwd(), '_cmtimes' );
 
 Readonly my $SAYERR => 'Could not write to standard output.';
 
@@ -63,7 +64,7 @@ criticizeall - Recursively find Perl sources and run perlcritic on them all
 
 =head1 VERSION
 
-This documentation refers to criticizeall version v0.0.4_9
+This documentation refers to criticizeall version v0.0.4_10
 
 =head1 USAGE
 
@@ -143,6 +144,7 @@ Zero on success.  No others defined at this time.
 
     autodie
     Carp
+    Cwd
     File::Next
     File::Spec
     File::stat
