@@ -46,6 +46,6 @@ t/Reporters/reporters.t.a_kdiff_reporter_reports_with_kdiff.approved.txt
 t/Reporters/reporters.t.a_p4merge_reporter_reports_with_p4merge.approved.txt
 t/Reporters/reporters.t.a_tortoisemerge_reporter_reports_with_tortoisemerge.approved.txt
 t/Reporters/reporters.t.a_winmerge_reporter_reports_with_winmerge.approved.txt
-tools/criticizeall.pl
-tools/tidyall.pl
-tools/versionall.pl
+bin/criticizeall.pl
+bin/tidyall.pl
+bin/versionall.pl

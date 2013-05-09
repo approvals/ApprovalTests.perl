@@ -5,7 +5,8 @@ use autodie;
 use version; our $VERSION = qv('v0.0.4_7');
 
 use Test::Approvals::Specs qw(describe it run_tests);
-use Test::Approvals qw(verify use_reporter reporter use_name use_name_in namer);
+use Test::Approvals
+  qw(verify verify_dump use_reporter reporter use_name use_name_in namer);
 use Test::More;
 
 use Path::Class;
@@ -41,6 +42,14 @@ describe 'An Approval', sub {
         my $spec = shift;
         use_name_in( $spec, dir('C:\tmp') );
         is namer()->directory, 'C:\tmp', namer()->name;
+    };
+
+    it 'Can consistently dump data structures to strings' => sub {
+        use_reporter('Test::Approvals::Reporters::DiffReporter');
+        use_name(shift);
+        my %person =
+          ( ssn => 'ABC123', lname => 'Flintrock', fname => 'Fred', );
+        verify_dump \%person;
     };
 };
 

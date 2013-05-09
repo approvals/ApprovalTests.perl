@@ -3,6 +3,7 @@ use strict;
 use warnings FATAL => 'all';
 use version; our $VERSION = qv('v0.0.4_7');
 
+use Data::Dumper;
 use Test::Approvals::Reporters;
 use Test::Approvals::Namers::DefaultNamer;
 use Test::Approvals::Core::FileApprover qw();
@@ -12,7 +13,8 @@ use Test::Builder;
 require Exporter;
 use base qw(Exporter);
 
-our @EXPORT_OK = qw(use_reporter use_reporter_instance verify verify_ok
+our @EXPORT_OK =
+  qw(use_reporter use_reporter_instance verify verify_ok verify_dump
   reporter use_name use_name_in namer);
 
 my $test = Test::Builder->new();
@@ -69,6 +71,15 @@ sub verify_ok {
     return $test->ok( verify($results), $namer_instance->name );
 }
 
+sub verify_dump {
+    my ( $ref, $name ) = @_;
+    my $dds = $Data::Dumper::Sortkeys;
+    $Data::Dumper::Sortkeys = 1;
+    my $ok = verify_ok Dumper($ref), $name;
+    $Data::Dumper::Sortkeys = $dds;
+    return $ok;
+}
+
 1;
 __END__
 =head1 NAME
@@ -117,6 +128,12 @@ Gets the currently configured Test::Approvals::Reporters:: instance.
 Construct a namer for the specified name, configure it as the current instance, 
 and return the instance.
 
+=head2 use_name_in
+
+    my $namer = use_name_in('My Test Name', 'C:\tests\approvals\');
+
+Like 'use_name', but names will be generated in the specified folder.
+
 =head2 use_reporter
 
     my $reporter = use_reporter('Test::Approvals::Reporters::DiffReporter');
@@ -144,11 +161,7 @@ appropriate.
 
 You can pass anything to verify that Perl can easily stringify in a scalar 
 context.  So, passing an array, a hash, or raw reference to verify is not going 
-to produce useful results.  In these cases, take advantage of Data::Dumper.
-
-    use Data::Dumper;
-    my %person = ( First => 'Fred', Last => 'Flintrock' );
-    ok verify(Dumper( \%person )), 'Fred test';
+to produce useful results.  In these cases, take advantage of verify_dump.
 
 =head2 verify_ok
 
@@ -161,6 +174,18 @@ traditional Test::More experience:
 
     verify_ok 'Hello', 'Hello Test';
 
+=head2 verify_dump
+
+    use_name('Person Test');
+    my %person = ( First => 'Fred', Last => 'Flintrock' );
+    verify_dump \%person;
+
+Like 'verify_ok', but will call Data::Dumper::Dumper on the reference for you.
+Because hash keys are not ordered, and therefore not guaranteed to be stable 
+across runs, this method will enable key sorting inside Data::Dumper using 
+$Data::Dumper::Sortkeys = 1.  Before returning, it restores Sortkeys to it's
+previous value.
+
 =head1 DIAGNOSTICS
 
 None at this time.
@@ -171,11 +196,11 @@ None.
 
 =head1 DEPENDENCIES
 
-=over
+=over 4
 
-Exporter
-Test::Builder
-version
+=item Exporter
+=item Test::Builder
+=item version
 
 =back
 
@@ -187,6 +212,8 @@ None known.
 
 Windows-only.  Linux/OSX/other support will be added when time and access to 
 those platforms permit.
+
+Perl 5.14 or greater.
 
 =head1 AUTHOR
 
