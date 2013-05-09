@@ -1,7 +1,7 @@
 package Test::Approvals::Reporters;
 use strict;
 use warnings FATAL => qw(all);
-use version; our $VERSION = qv('v0.0.4_7');
+use version; our $VERSION = qv('v0.0.4_9');
 
 use Test::Approvals::Reporters::AndReporter;
 use Test::Approvals::Reporters::BeyondCompareReporter;
@@ -24,7 +24,7 @@ Test::Approvals::Reporters - 'use' all the available reporters
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters version v0.0.4_7
+This documentation refers to Test::Approvals::Reporters version v0.0.4_9
 
 =head1 SYNOPSIS
 

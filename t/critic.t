@@ -3,13 +3,20 @@
 use Modern::Perl '2012';
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.4_7');
+use version; our $VERSION = qv('v0.0.4_9');
 
+use English qw(-no_match_vars);
 use Test::More;
 
-eval { require Test::Perl::Critic::Progressive };
-plan skip_all => 'T::P::C::Progressive required for this test' if $@;
+## no critic (ProhibitStringyEval RequireCheckingReturnValueOfEval)
+eval {
+    require Test::Perl::Critic::Progressive;
+    Test::Perl::Critic::Progressive::set_critic_args( -severity => 1 );
+};
+## use critic
 
-Test::Perl::Critic::Progressive::set_critic_args( -severity => 1 );
+if ($EVAL_ERROR) {
+    plan skip_all => 'T::P::C::Progressive required for this test';
+}
 Test::Perl::Critic::Progressive::progressive_critic_ok();
 

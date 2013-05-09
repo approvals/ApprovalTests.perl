@@ -29,6 +29,7 @@ t/00-load.t
 t/a1.txt
 t/approvals.t
 t/b.txt
+t/critic.t
 t/fileapprover.t
 t/manifest.t
 t/namer.t
@@ -39,6 +40,7 @@ t/Reporters/AndReporter.t
 t/Reporters/r.txt
 t/Reporters/a.txt
 t/Reporters/Reporters.t
+t/approvals.t.an_approval_can_consistently_dump_data_structures_to_strings.approved.txt 
 t/Reporters/reporters.t.a_beyondcompare_reporter_reports_with_beyondcompare.approved.txt
 t/Reporters/reporters.t.a_codecomparereporter_reports_with_devart_codecompare.approved.txt
 t/Reporters/reporters.t.a_file_launcher_reporter_uses_the_shell_to_locate_a_reporter.approved.txt
@@ -49,3 +51,5 @@ t/Reporters/reporters.t.a_winmerge_reporter_reports_with_winmerge.approved.txt
 bin/criticizeall.pl
 bin/tidyall.pl
 bin/versionall.pl
+META.yml
+META.json

@@ -1,7 +1,7 @@
 package Test::Approvals;
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.4_7');
+use version; our $VERSION = qv('v0.0.4_9');
 
 use Data::Dumper;
 use Test::Approvals::Reporters;
@@ -88,7 +88,7 @@ Test::Approvals - Capture human intelligence in your tests
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals version v0.0.4_7
+This documentation refers to Test::Approvals version v0.0.4_9
 
 =head1 SYNOPSIS
 
@@ -199,7 +199,9 @@ None.
 =over 4
 
 =item Exporter
+
 =item Test::Builder
+
 =item version
 
 =back

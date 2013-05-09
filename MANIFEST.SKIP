@@ -10,3 +10,6 @@ Test-Approvals-.*[.]tar[.]gz
 ^Build\.bat$
 ^blib
 [.]tmp$
+[.]perlcritic-history
+_prove
+perltidy[.]LOG
