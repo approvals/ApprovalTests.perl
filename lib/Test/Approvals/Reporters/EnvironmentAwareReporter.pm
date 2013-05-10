@@ -2,7 +2,7 @@ package Test::Approvals::Reporters::EnvironmentAwareReporter;
 
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.4_10');
+use version; our $VERSION = qv('v0.0.5');
 
 {
     use Moose::Role;
@@ -22,14 +22,14 @@ Test::Approvals::Reporters::EnvironmentAwareReporter
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::EnvironmentAwareReporter version v0.0.4_10
+This documentation refers to Test::Approvals::Reporters::EnvironmentAwareReporter version v0.0.5
 
 =head1 SYNOPSIS
 
 	# just mix in with a class that has 'exe' defined
 	package Test::Approvals::Reporters::MyCoolReporter;
 	{
-	    use version; our $VERSION = qv('v0.0.4_10');
+	    use version; our $VERSION = qv('v0.0.5');
 	    use Moose;
 
 		with 'Test::Approvals::Reporters::Reporter';

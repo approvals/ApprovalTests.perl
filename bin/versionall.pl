@@ -4,7 +4,7 @@ use Modern::Perl '2012';
 use strict;
 use warnings FATAL => 'all';
 use autodie;
-use version; our $VERSION = qv(0.0.1);
+use version; our $VERSION = qv('v0.0.2');
 
 use Carp;
 use Digest::SHA;

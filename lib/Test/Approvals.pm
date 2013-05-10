@@ -1,7 +1,7 @@
 package Test::Approvals;
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.4_10');
+use version; our $VERSION = qv('v0.0.5');
 
 use Data::Dumper;
 use Test::Approvals::Reporters;
@@ -88,7 +88,7 @@ Test::Approvals - Capture human intelligence in your tests
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals version v0.0.4_10
+This documentation refers to Test::Approvals version v0.0.5
 
 =head1 SYNOPSIS
 
