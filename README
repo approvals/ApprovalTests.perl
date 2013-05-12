@@ -19,11 +19,11 @@ view the test results in one of many popular diff utilities.
 
 INSTALLATION
 
-From CPAN (http://search.cpan.org/~jrcounts/Test-Approvals/):
+From CPAN ( http://search.cpan.org/~jrcounts/Test-Approvals/ ):
 
 	cpan install Test::Approvals
 
-From PPM (http://code.activestate.com/ppm/Test-Approvals/):
+From PPM ( http://code.activestate.com/ppm/Test-Approvals/ ):
 
 	ppm install Test::Approvals
 
