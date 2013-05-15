@@ -19,6 +19,14 @@ For example, you could use a diff tool, or simply display the output.
 You can find several reporters under Test::Approvals::Reporters, or 
 create your own by implementing the Test::Approvals::Reporters::Reporter 
 role.  
+
+If you don't know what to do try this:
+
+    use Test::Approvals qw(use_reporter);
+    use_reporter('Test::Approvals::Reporters::DiffReporter');
+
+The DiffReporter will try to find a working reporter on your machine
+and use the first one available.
 EOF
         my $test = Test::Builder->new();
         $test->diag($message);
