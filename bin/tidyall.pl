@@ -4,9 +4,10 @@ use Modern::Perl '2012';
 use strict;
 use warnings FATAL => 'all';
 use autodie;
-use version; our $VERSION = qv('v0.0.5');
+use version; our $VERSION = qv('v0.0.5_1');
 
 use Carp;
+use Cwd;
 use File::Next;
 use File::Spec;
 use File::stat;
@@ -16,7 +17,7 @@ use Storable;
 
 my $print_info = $ARGV{-v};
 my $input      = $ARGV{-i};
-my $cache      = File::Spec->catfile( Bin(), '_mtimes' );
+my $cache      = File::Spec->catfile( getcwd(), '_mtimes' );
 
 if ($print_info) {
     say "Looking for Perl sources in $input"
@@ -62,7 +63,7 @@ tidyall - Recursively find all Perl sources and run perltidy on them all
 
 =head1 VERSION
 
-This documentation refers to tidyall version v0.0.5
+This documentation refers to tidyall version v0.0.5_1
 
 =head1 USAGE
 
@@ -136,6 +137,7 @@ None.
 
     autodie
     Carp
+    Cwd
     File::Next
     File::Spec
     File::stat

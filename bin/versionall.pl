@@ -7,6 +7,7 @@ use autodie;
 use version; our $VERSION = qv('v0.0.2');
 
 use Carp;
+use Cwd;
 use Digest::SHA;
 use File::Copy;
 use File::Next;
@@ -21,7 +22,7 @@ my $print_info = $ARGV{-v};
 my $input      = $ARGV{-i};
 my $force      = $ARGV{'-f'};
 my $nv         = $ARGV{-n};
-my $cache      = File::Spec->catfile( Bin(), '_vtimes' );
+my $cache      = File::Spec->catfile( getcwd(), '_vtimes' );
 
 Readonly my $SAYERR => 'Could not write to standard output.';
 
@@ -104,7 +105,7 @@ versionall - Recursively find Perl sources and update version numbers
 
 =head1 VERSION
 
-This documentation refers to versionall version 0.0.1
+This documentation refers to versionall version v0.0.2
 
 =head1 USAGE
 
@@ -181,6 +182,7 @@ Zero on success.  No others defined at this time.
 
     autodie
     Carp
+    Cwd
     File::Next
     File::Spec
     File::stat

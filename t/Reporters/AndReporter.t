@@ -2,7 +2,7 @@
 use strict;
 use warnings FATAL => qw(all);
 use autodie;
-use version; our $VERSION = qv('v0.0.5');
+use version; our $VERSION = qv('v0.0.5_1');
 
 use Test::Approvals::Specs qw(describe it run_tests);
 use Test::More;
