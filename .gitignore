@@ -23,3 +23,5 @@ bin/_cmtimes
 bin/_mtimes
 bin/_vtimes
 .perlcritic-history
+perltidy.LOG
+_mtimes
