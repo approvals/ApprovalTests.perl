@@ -3,7 +3,7 @@
 use strict;
 use warnings FATAL => qw(all);
 use autodie;
-use version; our $VERSION = qv('v0.0.5_1');
+use version; our $VERSION = qv('v0.0.5_2');
 
 use Perl6::Slurp;
 use Test::Approvals::Specs qw(describe it run_tests);

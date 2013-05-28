@@ -2,11 +2,11 @@
 use strict;
 use warnings FATAL => qw(all);
 use autodie;
-use version; our $VERSION = qv('v0.0.5_1');
+use version; our $VERSION = qv('v0.0.5_2');
 
 use Test::Approvals::Specs qw(describe it run_tests);
 use Test::Approvals
-  qw(verify verify_dump use_reporter reporter use_name use_name_in namer);
+  qw(verify verify_dump use_reporter reporter use_name use_name_in namer scrub_with);
 use Test::More;
 
 use Path::Class;
@@ -47,6 +47,15 @@ describe 'An Approval', sub {
     it 'Can consistently dump data structures to strings' => sub {
         use_reporter('Test::Approvals::Reporters::DiffReporter');
         use_name(shift);
+        my %person =
+          ( ssn => 'ABC123', lname => 'Flintrock', fname => 'Fred', );
+        verify_dump \%person;
+    };
+
+    it 'Scrubs with the provided scrubber' => sub {
+        use_reporter('Test::Approvals::Reporters::DiffReporter');
+        use_name(shift);
+        scrub_with( sub { my $text = shift; return $text =~ tr/F//dr; } );
         my %person =
           ( ssn => 'ABC123', lname => 'Flintrock', fname => 'Fred', );
         verify_dump \%person;
