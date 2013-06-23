@@ -235,7 +235,13 @@ None.
 
 =head1 INCOMPATIBILITIES
 
-None known.
+=head2 Approved File Artifacts
+
+The `*.approved.*` files must be checked into source your source control. This 
+can be an issue with git as it will change the line endings. 
+
+The suggested fix is to add `*.approved.* binary` to your `.gitattributes`
+
 
 =head1 BUGS AND LIMITATIONS
 
