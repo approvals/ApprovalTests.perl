@@ -31,7 +31,7 @@ __PACKAGE__->meta->make_immutable;
 __END__
 =head1 NAME
 
-Test::Approvals::Reporters::ClipboardReporter - Report with BeyondCompare
+Test::Approvals::Reporters::ClipboardReporter - Report with the clipboard
 
 =head1 VERSION
 
@@ -46,19 +46,23 @@ This documentation refers to Test::Approvals::Reporters::ClipboardReporter versi
 
 =head1 DESCRIPTION
 
-This module reports using Beyond Compare 3.  Download Beyond Compare at
-http://www.scootersoftware.com/
+This module reports by pasting a move command onto the operating system
+clipboard.  Paste into a terminal window and execute to move the received file
+over to the approved file.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 argv
+=head2 get_command_line
 
-Returns the argument portion expected by the reporter when invoked from the
-command line.
+    my $cmd = get_command_line( 'r.txt', 'a.txt', 'darwin' );
 
-=head2 exe
+Gets the os-appropriate move command.  Override the os using the optional
+third parameter, or use only the first two parameters to atomatically detect
+the current OS.
 
-Returns the path to the reporter executable.
+=head2 report
+
+Copy the move command to the operating system clipboard.
 
 =head1 DIAGNOSTICS
 
@@ -66,13 +70,14 @@ None at this time.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
-Make sure you have Beyond Compare installed if you want to use this module.
+None
 
 =head1 DEPENDENCIES
 
 =over 4
 
 Moose
+Clipboard
 version
 
 =back
@@ -83,8 +88,7 @@ None known.
 
 =head1 BUGS AND LIMITATIONS
 
-Windows-only.  Linux/OSX/other support will be added when time and access to
-those platforms permit.
+None known.
 
 =head1 AUTHOR
 
