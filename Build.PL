@@ -29,6 +29,7 @@ my $builder = Module::Build->new(
         'version'         => 0,
         'Capture::Tiny'   => 0,
         'Carp'            => 0,
+        'Clipboard'       => 0,
         'Cwd'             => 0,
         'Data::Dumper'    => 0,
         'English'         => 0,

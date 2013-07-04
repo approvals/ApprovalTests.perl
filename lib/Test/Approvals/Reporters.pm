@@ -5,6 +5,7 @@ use version; our $VERSION = qv('v0.0.5_2');
 
 use Test::Approvals::Reporters::AndReporter;
 use Test::Approvals::Reporters::BeyondCompareReporter;
+use Test::Approvals::Reporters::ClipboardReporter;
 use Test::Approvals::Reporters::CodeCompareReporter;
 use Test::Approvals::Reporters::DiffReporter;
 use Test::Approvals::Reporters::FakeReporter;
@@ -56,7 +57,7 @@ None known.
 
 =head1 BUGS AND LIMITATIONS
 
-Windows-only.  Linux/OSX/other support will be added when time and access to 
+Windows-only.  Linux/OSX/other support will be added when time and access to
 those platforms permit.
 
 =head1 AUTHOR
