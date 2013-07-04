@@ -2,7 +2,7 @@ package Test::Approvals::Reporters::ClipboardReporter;
 
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.5_2');
+use version; our $VERSION = qv('v0.0.5_3');
 
 {
     use Clipboard;
@@ -35,7 +35,7 @@ Test::Approvals::Reporters::ClipboardReporter - Report with the clipboard
 
 =head1 VERSION
 
-This documentation refers to Test::Approvals::Reporters::ClipboardReporter version v0.0.5_2
+This documentation refers to Test::Approvals::Reporters::ClipboardReporter version v0.0.5_3
 
 =head1 SYNOPSIS
 

@@ -2,7 +2,7 @@
 use strict;
 use warnings FATAL => qw(all);
 use autodie;
-use version; our $VERSION = qv('v0.0.1');
+use version; our $VERSION = qv('v0.0.5_3');
 
 use Clipboard;
 use Test::Approvals qw(verify_ok use_reporter use_name namer);

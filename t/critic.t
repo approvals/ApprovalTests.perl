@@ -3,7 +3,7 @@
 use Modern::Perl '2012';
 use strict;
 use warnings FATAL => 'all';
-use version; our $VERSION = qv('v0.0.5_2');
+use version; our $VERSION = qv('v0.0.5_3');
 
 use English qw(-no_match_vars);
 use Test::More;
