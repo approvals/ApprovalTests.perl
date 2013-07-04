@@ -1,4 +1,5 @@
 *.bak
+_vtimes
 _prove
 *.received.*
 Makefile
