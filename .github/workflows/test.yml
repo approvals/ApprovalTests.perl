@@ -10,6 +10,9 @@ jobs:
     - uses: actions/checkout@main
     - name: Setup Perl environment
       uses: shogo82148/actions-setup-perl@v1.14.2
+      with: 
+        install-modules-with: cpanm
+    - run: prove -lv t      
     - name: test
       run: ./run_tests.sh
         
