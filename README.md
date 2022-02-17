@@ -1,4 +1,6 @@
-Test-Approvals
+# Test-Approvals
+
+[![test](https://github.com/approvals/ApprovalTests.perl/actions/workflows/test.yml/badge.svg)](https://github.com/approvals/ApprovalTests.perl/actions/workflows/test.yml)
 
 Capturing Human Intelligence - ApprovalTests is an open source 
 assertion/verification library to aid testing.  Test::Approvals
@@ -6,7 +8,7 @@ is the ApprovalTests port for Perl.
 
 For more information see: www.approvaltests.com
 
-What can I use ApprovalTests for?
+## What can I use ApprovalTests for?
 
 You can use ApprovalTests to verify objects that require more than
 a simple assert including long strings, large arrays, and complex
@@ -17,7 +19,7 @@ difference in a long string printed to STDOUT is just too hard!
 ApprovalTests solves this problem by providing reporters which let you
 view the test results in one of many popular diff utilities.
 
-INSTALLATION
+## INSTALLATION
 
 From CPAN ( http://search.cpan.org/~jrcounts/Test-Approvals/ ):
 
@@ -36,7 +38,7 @@ From source:
 	./Build test
 	./Build install
 
-SUPPORT AND DOCUMENTATION
+## SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the
 perldoc command.
@@ -51,7 +53,7 @@ You can also look for information at:
     ApprovalTests Homepage
         http://www.approvaltests.com
         
-LICENSE AND COPYRIGHT
+## LICENSE AND COPYRIGHT
 
 Copyright (C) 2013 Jim Counts
 
