@@ -1,6 +1,7 @@
 #!/bin/sh
 
-	perl Build.PL
-	./Build
-	./Build test
-	./Build install
+cpan Module::Build
+perl Build.PL
+./Build
+./Build test
+./Build install
