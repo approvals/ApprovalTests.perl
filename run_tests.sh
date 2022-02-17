@@ -1,3 +1,4 @@
+#!/bin/sh
 
 	perl Build.PL
 	./Build
